@@ -19,3 +19,17 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env
+npm-debug.log
