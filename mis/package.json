@@ -44,7 +44,6 @@
     ]
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
@@ -67,6 +66,5 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kaustavsarkar/giveback-schedule/issues"
-  },
-  "homepage": "https://github.com/kaustavsarkar/giveback-schedule#readme"
+  }
 }
