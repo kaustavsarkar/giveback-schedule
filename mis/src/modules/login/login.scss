@@ -1,0 +1,20 @@
+@use 'index.scss';
+
+.login-container {
+  background-image: url('./assets/login-bg.png');
+  background-size: cover;
+  background-position: 50%;
+  position: relative;
+  z-index: 1;
+  padding: 100px;
+  &:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+}
