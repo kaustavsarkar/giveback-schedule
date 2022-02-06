@@ -1,5 +1,12 @@
 import React from 'react';
+import './login.scss';
+import './login-card';
+import LoginCard from './login-card';
 
 export default function Login() {
-  return <div>Log me in!</div>;
+  return (
+    <div className="login-container">
+      <LoginCard />
+    </div>
+  );
 }
