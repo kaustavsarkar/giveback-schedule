@@ -6,15 +6,17 @@ module.exports = {
     'plugin:prettier/recommended',
     'google',
   ],
-  rules: {
-    'object-curly-spacing': ['error', 'always'],
-  },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2021,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
     },
+  },
+  rules: {
+    'prettier/prettier': 'error',
+    'quote-props': [1, 'as-needed'],
+    indent: ['error', 2, {MemberExpression: 'off'}],
   },
   settings: {
     react: {

@@ -1,11 +1,10 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { FirebaseApp } from 'modules/login/firebase';
+import {getAuth, signInWithPopup, GoogleAuthProvider} from 'firebase/auth';
+import {FirebaseApp} from 'modules/login/firebase';
 
 export const googleSignIn = () => {
   const auth = getAuth(FirebaseApp);
   // Setting preferred language for authentication.
   auth.languageCode = 'en';
-
   const provider = new GoogleAuthProvider();
   // We need to get only email and profile information from authentication.
   provider.addScope('email');
@@ -17,11 +16,9 @@ export const googleSignIn = () => {
       const user = result.user;
       // TODO: Save in Cookies and Redux.
       console.log(
-        `token: ${token} \n user: ${JSON.stringify(user, null, 4)} \n credential: ${JSON.stringify(
-          credential,
-          null,
-          4,
-        )}`,
+        `token: ${token} \n 
+        user: ${JSON.stringify(user, null, 4)} 
+        \n credential: ${JSON.stringify(credential, null, 4)}`,
       );
     })
     .catch((error) => {
@@ -33,7 +30,9 @@ export const googleSignIn = () => {
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
       console.log(
-        `errorCode: ${errorCode} \n errorMessage: ${errorMessage} \n credential: ${credential} \n email: ${email}`,
+        `errorCode: ${errorCode} 
+        \n errorMessage: ${errorMessage} 
+        \n credential: ${credential} \n email: ${email}`,
       );
     });
 };

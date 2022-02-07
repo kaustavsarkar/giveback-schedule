@@ -1,7 +1,7 @@
 import React from 'react';
 import './login-card.scss';
-import { ReactComponent as GoogleSvg } from './assets/icons8-google.svg';
-import { googleSignIn } from 'modules/auth/google_auth';
+import {ReactComponent as GoogleSvg} from './assets/icons8-google.svg';
+import {googleSignIn} from 'modules/auth/google_auth';
 
 /**
  * @return {JSX.Element}

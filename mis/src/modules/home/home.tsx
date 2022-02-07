@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const LoginButton: React.FC = () => {
   return (
@@ -9,7 +9,11 @@ const LoginButton: React.FC = () => {
   );
 };
 
-function Home() {
+/**
+ *
+ * @return {JSX.Element}
+ */
+function Home(): JSX.Element {
   return (
     <>
       <div>kuch dikha bhai</div>
