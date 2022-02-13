@@ -8,7 +8,9 @@ export default function LoginCard() {
     <div className="login-card-container">
       <div className="content-center height-100">
         <div className="content-container">
-          <span>Welcome to #giveback</span>
+          <span>
+            Welcome to <code>#giveback</code>
+          </span>
           <ul className="login-icons">
             <div className="login-svg">
               <GoogleSvg></GoogleSvg>
