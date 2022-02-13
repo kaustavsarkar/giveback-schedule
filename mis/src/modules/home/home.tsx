@@ -1,7 +1,11 @@
 import React from 'react';
+<<<<<<< HEAD
 import { Link, Outlet } from 'react-router-dom';
 import './home.scss';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+=======
+import {Link} from 'react-router-dom';
+>>>>>>> 4d55da2065ed5efcdab47f0eedaf62e604143df2
 
 const LoginButton: React.FC = () => {
   return (
@@ -13,7 +17,11 @@ const LoginButton: React.FC = () => {
   );
 };
 
-function Home() {
+/**
+ *
+ * @return {JSX.Element}
+ */
+function Home(): JSX.Element {
   return (
     <>
       <div className="home-navbar">
