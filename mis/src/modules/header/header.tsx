@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import './header.css';
 
-function Header() {
+function Header(): JSX.Element {
   return (
     <div>
       <div className="home-navbar">

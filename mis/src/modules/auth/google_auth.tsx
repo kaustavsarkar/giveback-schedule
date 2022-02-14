@@ -10,7 +10,7 @@ export const googleSignIn = () => {
   provider.addScope('email');
   provider.addScope('profile');
   signInWithPopup(auth, provider)
-    .then((result:any) => {
+    .then((result: any) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
       const user = result.user;
@@ -21,7 +21,7 @@ export const googleSignIn = () => {
         \n credential: ${JSON.stringify(credential, null, 4)}`,
       );
     })
-    .catch((error:any) => {
+    .catch((error: any) => {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
