@@ -1,0 +1,384 @@
+.home-navbar{
+
+    background-color:#24292d;
+    padding:10px;
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    z-index: 1000;
+    // border-bottom: 0.1px solid #fff;
+    a{
+        color:#fff;
+    }
+    a:hover{
+        color:#13b497;
+    }
+    .navbar-brand {
+        color:#13b497;
+        font-size: 20px;
+    }
+}
+.home-content {
+
+    background-color: #24292d;
+
+    .home-slider{
+    background:url('https://images.unsplash.com/photo-1517512006864-7edc3b933137?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80');
+    height:500px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    .login-button {
+        text-decoration: none;
+        border:#13b497;
+        background-color: #13b497;
+        color:white;
+        padding:10px 30px;
+    }
+    .login-button:hover{
+        color:#13b497;
+        background-color: #fff;
+    }
+    }
+
+    .home-about {
+        h3{
+            color:#fff;
+            margin:20px 0;
+        }
+
+        p{
+            color:rgb(204, 243, 240)
+        }
+        h4{
+            text-align: center;
+            margin:20px 0;
+        }
+        
+        .home-about-benefit{
+            display: flex;
+            justify-content: center;
+            div{
+                background-color: #13b497;
+                color:#fff;
+                padding: 20px;
+                margin:5px;
+            }
+        }
+    }
+    
+  
+}
+
+.home-contact {
+    h3{
+        color:#fff;
+        margin:20px 0;
+    }
+}
+#contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .contact-box {
+        width: clamp(100px, 90%, 1000px);
+        margin: 80px 50px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      
+      .contact-links, .contact-form-wrapper {
+        width: 50%;
+        padding: 8% 5% 10% 5%;
+      }
+      
+      
+      .contact-links {
+        background-color: #13b497;
+        background:
+          radial-gradient(
+            circle at 55% 92%, #24292d 0 12%, transparent 12.2%
+          ), 
+          radial-gradient(
+            circle at 94% 72%, #24292d 0 10%, transparent 10.2%
+          ), 
+          radial-gradient(
+            circle at 20% max(78%, 350px), #24292d 0 7%, transparent 7.2%
+          ), 
+          radial-gradient(
+            circle at 0% 0%, #242e2c 0 40%, transparent 40.2%
+          ), 
+          #13b497;
+        border-radius: 10px 0 0 10px;
+      }
+      
+      .contact-form-wrapper {
+        background-color: #313333;
+        border-radius: 0 10px 10px 0;
+      }
+      
+      @media only screen and (max-width: 800px) {
+        .contact-links, .contact-form-wrapper {
+          width: 100%;
+        }
+        
+        .contact-links {
+          border-radius: 10px 10px 0 0;
+        }
+        
+        .contact-form-wrapper {
+          border-radius: 0 0 10px 10px;
+        }
+      }
+      
+      @media only screen and (max-width: 400px) {
+        .contact-box {
+          width: 95%;
+          margin: 8% 5%;
+        }
+      }
+      
+      h2 {
+        font-family: 'Arimo', sans-serif;
+        color: #fff;
+        font-size: clamp(30px, 6vw, 60px);
+        letter-spacing: 2px;
+        text-align: center;
+        transform: scale(.95, 1);
+      }
+      
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 50px;
+      }
+      
+      .link {
+        margin: 10px;
+        cursor: pointer;
+      }
+      .link a i{
+          color:#fff;
+          padding:15px;
+          font-size: 30px;
+      }
+      
+      .link a i:hover {
+        transform: scale(1.1, 1.1);
+      }
+      
+      .form-item {
+        position: relative;
+      }
+      
+      label, input, textarea {
+        font-family: 'Poppins', sans-serif;
+      }
+      
+      label {
+        position: absolute;
+        top: 10px;
+        left: 2%;
+        color: #999;
+        font-size: clamp(14px, 1.5vw, 18px);
+        pointer-events: none;
+        user-select: none;
+      }
+      
+      input, textarea {
+        width: 100%;
+        outline: 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        padding: 12px;
+        font-size: clamp(15px, 1.5vw, 18px);
+      }
+      
+      input:focus+label, 
+      input:valid+label, 
+      textarea:focus+label, 
+      textarea:valid+label {
+        font-size: clamp(13px, 1.3vw, 16px);
+        color: #777;
+        top: -20px;
+        transition: all .225s ease;
+      }
+      
+      .submit-btn {
+        background-color: #13b497;
+        filter: drop-shadow(2px 2px 3px #0003);
+        color: #fff;
+        font-family: "Poppins",sans-serif;
+        font-size: clamp(16px, 1.6vw, 18px);
+        display: block;
+        padding: 12px 20px;
+        margin: 2px auto;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        user-select: none;
+        transition: 0.2s;
+      }
+      
+      .submit-btn:hover {
+        transform: scale(1.1, 1.1);
+      }
+      
+      .submit-btn:active {
+        transform: scale(1.1, 1.1);
+        filter: sepia(0.5);
+      }
+      
+      @media only screen and (max-width: 800px) {
+        h2 {
+          font-size: clamp(40px, 10vw, 60px);
+        }
+      }
+      
+      @media only screen and (max-width: 400px) {
+        h2 {
+          font-size: clamp(30px, 12vw, 60px);
+        }
+        
+        .links {
+          padding-top: 30px;
+        }
+        
+        img {
+          width: 38px;
+          height: 38px;
+        }
+      }
+  }
+
+  .home-footer {
+    font-size: 16px;
+    background:  #242e2c;
+    padding: 2em 4em;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 1em;
+    font-family: "IBM Plex Sans", sans-serif;
+    ul {
+        list-style: none;
+      }
+      
+      .col {
+        flex: 1;
+      }
+      
+      .col-title {
+        font-family: "Merriweather", serif;
+        color: #f2f3fb;
+        font-size: 1.1em;
+        font-weight: 500;
+        padding: 0.5em 0;
+      }
+      
+      .col-list a {
+        color: #9da2ae;
+        text-decoration: none;
+        line-height: 1.4;
+        font-weight: 400;
+      }
+      
+      .col-list a:hover,
+      .col-list a:focus {
+        text-decoration: underline;
+      }
+      
+      .subscribe-form,
+      .social-media {
+        display: flex;
+        gap: 0.5em;
+        padding: 0.5em 0;
+      }
+      
+      .subscribe-input {
+        width: auto;
+        flex: 1;
+        background: transparent;
+        border: 0.06em solid #3a456a;
+        font-size: 1em;
+        font-weight: 500;
+        padding: 0.5em;
+        border-radius: 0.3em;
+        transition: all 0.25s ease 0s;
+        display: inline-block;
+        color: #9da2ae;
+      }
+      
+      .subscribe-input:focus {
+        outline: none;
+        border-color: #f2f3fb;
+        color: #f2f3fb;
+      }
+      
+      .subscribe-btn {
+        background: #f1f2fc;
+        border: none;
+        font-size: 1em;
+        font-weight: 600;
+        padding: 0.5em;
+        border-radius: 0.3em;
+        transition: all 0.25s ease 0s;
+        display: inline-block;
+        color: #1e2641;
+        cursor: pointer;
+      }
+      
+      .subscribe-btn:hover,
+      .subscribe-btn:focus {
+        background: #d5d9f6;
+      }
+      
+      .form-title,
+      .social-col-title {
+        font-size: 1em;
+        color: #f2f3fb;
+        font-weight: 500;
+      }
+      
+      .social-media {
+        flex-direction: column;
+      }
+      
+      .social-media-list {
+        display: flex;
+        gap: 0.5rem;
+      }
+      
+      .social-media-list a {
+        padding: 0.5em;
+        color: #9da2ae;
+        display: flex;
+        border-radius: 0.3em;
+        transition: all 0.25s ease 0s;
+      }
+      
+      .social-media-list a:hover,
+      .social-media-list a:focus {
+        color: #f2f3fb;
+        background: #ffffff1a;
+      }
+      
+      .social-media-list svg {
+        width: 1.5em;
+        height: 1.5em;
+        transition: all 0.25s ease 0s;
+      }
+      
+      @media screen and (max-width: 750px) {
+        footer {
+          padding: 2em;
+          flex-direction: column;
+        }
+      }
+  }
+
+  
+  

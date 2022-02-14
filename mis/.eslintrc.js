@@ -1,11 +1,15 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
+<<<<<<< HEAD
+  extends: ['plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
+=======
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'google',
   ],
+>>>>>>> 4d55da2065ed5efcdab47f0eedaf62e604143df2
   parserOptions: {
     ecmaVersion: 2021,
     sourceType: 'module',
