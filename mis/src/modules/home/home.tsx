@@ -1,11 +1,7 @@
 import React from 'react';
-<<<<<<< HEAD
-import { Link, Outlet } from 'react-router-dom';
+import {Link, Outlet} from 'react-router-dom';
 import './home.scss';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-=======
-import {Link} from 'react-router-dom';
->>>>>>> 4d55da2065ed5efcdab47f0eedaf62e604143df2
 
 const LoginButton: React.FC = () => {
   return (
@@ -44,12 +40,12 @@ function Home(): JSX.Element {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="#about-us">
                   About us
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="#contact-us">
                   Contact us
                 </a>
               </li>
