@@ -2,11 +2,14 @@ import React from 'react';
 import './login-card.scss';
 import {ReactComponent as GoogleSvg} from './assets/icons8-google.svg';
 import {googleSignIn} from 'modules/auth/google_auth';
+import {useAppSelector, useAppDispatch} from 'state/hooks';
 
 /**
  * @return {JSX.Element}
  */
 export default function LoginCard(): JSX.Element {
+  const existingUser = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const handleGoogleLogin = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     googleSignIn();
