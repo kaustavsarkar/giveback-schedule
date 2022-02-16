@@ -60,17 +60,23 @@ function Home(): JSX.Element {
         <div className="home-about container" id="about-us">
           <h3>About Us</h3>
           <p>
-            Rupal & Rupal was established with an intent to provide an all-inclusive setup for serving clients across
-            international borders. With a team of competent, qualified and experienced lawyers, we aim to achieve the
-            highest technical standards whilst conforming to ethical legal practices. Rupal & Rupal offers legal
-            advisory, guidance and representation on a wide spectrum of issues ensuring client satisfaction.
+            Rupal & Rupal was established with an intent to provide an
+            all-inclusive setup for serving clients across international
+            borders. With a team of competent, qualified and experienced
+            lawyers, we aim to achieve the highest technical standards whilst
+            conforming to ethical legal practices. Rupal & Rupal offers legal
+            advisory, guidance and representation on a wide spectrum of issues
+            ensuring client satisfaction.
           </p>
           <h4>Mission</h4>
           <p>
-            At Rupal & Rupal, we are committed to providing our Clients the best legal services at reasonable costs in
-            all spheres of law.Our motto is. The spirit behind this boutique law firm is the enriched experience of its
-            partners and associates in handling with dexterity and aplomb all matters . The Clients have the best
-            advantage of receiving a professional approach coupled with integrity and timely execution.
+            At Rupal & Rupal, we are committed to providing our Clients the best
+            legal services at reasonable costs in all spheres of law.Our motto
+            is. The spirit behind this boutique law firm is the enriched
+            experience of its partners and associates in handling with dexterity
+            and aplomb all matters . The Clients have the best advantage of
+            receiving a professional approach coupled with integrity and timely
+            execution.
           </p>
           <h4>Benefits</h4>
           <div className="home-about-benefit">
