@@ -5,13 +5,17 @@ import {
   GoogleAuthProvider,
   UserCredential,
   OAuthCredential,
+  setPersistence,
+  inMemoryPersistence,
 } from 'firebase/auth';
 import {FirebaseApp} from 'modules/login/firebase';
-import {createGoogleUserProfile, UserProfile} from 'models/user';
-import {Cookie, setCookie} from 'state/cookies';
+import {createGoogleUserProfile} from 'models/user';
 
 export const googleSignIn = async () => {
   const auth = getAuth(FirebaseApp);
+  console.log('before persistence');
+  await setPersistence(auth, inMemoryPersistence);
+  console.log('after persistence');
   // Setting preferred language for authentication.
   auth.languageCode = 'en';
   const provider = new GoogleAuthProvider();
@@ -34,7 +38,7 @@ export const googleSignIn = async () => {
       oAuthCred,
       idTokenResult,
     );
-    saveData(userProfile);
+
     return userProfile;
   } catch (error) {
     console.log(error);
@@ -56,11 +60,3 @@ export const googleSignIn = async () => {
   }
   return;
 };
-
-function saveData(userProfile: UserProfile) {
-  // userProfile.googleCreds.
-  setCookie(<Cookie>{
-    key: 'accessToken',
-    value: userProfile.googleCreds.accessToken,
-  });
-}
