@@ -1,7 +1,7 @@
 import {CaseReducer, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import {createSlice} from '@reduxjs/toolkit';
 import {UserProfile} from 'models/user';
-import {googleSignIn} from 'modules/auth/google_auth';
+import {userSignIn} from 'modules/auth/signin';
 import {RootState} from 'state/store';
 
 // Define type of state to be used in reducer.
@@ -9,7 +9,7 @@ type State = UserProfile;
 
 const initialState = <UserProfile>{};
 
-export const loginUser = createAsyncThunk('user/login', googleSignIn);
+export const loginUser = createAsyncThunk('user/login', userSignIn);
 
 // Reducer for user login.
 const loginReducer: CaseReducer<
