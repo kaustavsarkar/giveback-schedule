@@ -3,6 +3,7 @@ import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Home from 'modules/home/home';
 import Login from 'modules/login/login';
+import {PrivateRoute} from 'private_route';
 
 /**
  *
@@ -14,6 +15,9 @@ function App(): JSX.Element {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route element={<PrivateRoute redirectTo="/login" />}>
+          <Route path="/dashboard" element={<></>}></Route>
+        </Route>
       </Routes>
     </Router>
   );
