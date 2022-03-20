@@ -10,6 +10,7 @@ import {User, UserProfile} from 'models/user';
 import {fsDatabase} from 'gfirebase/firebase';
 import {UserCollection, UserConverter} from 'state/firebase/schema';
 import {googleSignIn} from './google_auth';
+import user from 'state/reducers/user';
 
 export const userSignIn = async () => {
   const userProfile = (await googleSignIn()) as UserProfile;
@@ -19,11 +20,23 @@ export const userSignIn = async () => {
 
 async function saveData_(userProfile: UserProfile): Promise<void> {
   const email = userProfile.user.email;
-  saveInLocalStorage_(email, userProfile);
   const userData = (await userDataFirebase_(email)) as User;
 
-  // Save user data in firebase if absent
-  !userData && saveInFirebase_(userProfile);
+  // Save user data in firebase if absent.
+  if (!userData) {
+    saveInFirebase_(userProfile);
+    userProfile = <UserProfile>{
+      ...userProfile,
+      user: <User>{
+        ...user,
+        isSavedInFirebase: true,
+      },
+    };
+
+    // Once the data is confirmed to be present inside firebase, we
+    // can save it in local storage as well.
+    saveInLocalStorage_(email, userProfile);
+  }
 }
 
 function saveInLocalStorage_(email: string, userProfile: UserProfile): void {
@@ -41,7 +54,6 @@ async function saveInFirebase_(userProfile: UserProfile): Promise<void> {
     name: user.name,
     email: user.email,
     photoUrl: user.photoUrl,
-    // linkedInProfile: user.linkedInProfile,
   });
 }
 
