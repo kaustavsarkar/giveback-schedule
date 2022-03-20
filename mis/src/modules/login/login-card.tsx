@@ -4,18 +4,22 @@ import {ReactComponent as GoogleSvg} from './assets/icons8-google.svg';
 import {useAppSelector, useAppDispatch} from 'state/hooks';
 import {UserProfile} from 'models/user';
 import {loginUser} from 'state/reducers/user';
+import {RootState} from 'state/store';
 
 /**
  * @return {JSX.Element}
  */
 export default function LoginCard(): JSX.Element {
-  const existingUser = useAppSelector((state) => state.user) as UserProfile;
+  const existingUser = useAppSelector(
+    (state: RootState) => state.user,
+  ) as UserProfile;
   const dispatch = useAppDispatch();
   const handleGoogleLogin = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (existingUser?.user?.hasLoggedIn === undefined) {
       dispatch(loginUser());
     }
+    console.log('after dispatch', existingUser);
   };
   return (
     <div className="login-card-container">

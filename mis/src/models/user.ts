@@ -1,13 +1,17 @@
 import {IdTokenResult, OAuthCredential, User as FUser} from 'firebase/auth';
+import {Builder} from 'shared/builder';
 
 // TODO (kaustavsarkar): Make it immutable.
 export interface User {
   readonly name: string;
   readonly email: string;
-  readonly displayPicture: string;
   readonly hasLoggedIn: boolean;
   readonly photoUrl: string;
+  readonly linkedInProfile: string;
+  readonly isSavedInFirebase: boolean;
 }
+
+export const UserBuilder = <Builder<User>>{};
 
 export interface GoogleCreds {
   readonly idToken: string;

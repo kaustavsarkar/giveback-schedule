@@ -8,7 +8,7 @@ import {
   setPersistence,
   inMemoryPersistence,
 } from 'firebase/auth';
-import {FirebaseApp} from 'modules/login/firebase';
+import {FirebaseApp} from 'gfirebase/firebase';
 import {createGoogleUserProfile} from 'models/user';
 
 export const googleSignIn = async () => {
