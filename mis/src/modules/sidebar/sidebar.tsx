@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 const sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -11,7 +11,11 @@ const sidebar = () => {
       <div className="wrapper">
         <nav className={'sidebar ' + (sidebarOpen ? 'active' : '')}>
           <div className="dismiss">
-            <i role="button" onClick={openSidebar} className="fas fa-arrow-left"></i>
+            <i
+              role="button"
+              onClick={openSidebar}
+              className="fas fa-arrow-left"
+            ></i>
           </div>
           <div className="logo">
             <h3>
@@ -71,16 +75,28 @@ const sidebar = () => {
           </ul>
 
           <div className="to-top">
-            <a className="btn btn-primary btn-customized-3" href="#" role="button">
+            <a
+              className="btn btn-primary btn-customized-3"
+              href="#"
+              role="button"
+            >
               <i className="fas fa-arrow-up"></i> Top
             </a>
           </div>
 
           <div className="dark-light-buttons">
-            <a className="btn btn-primary btn-customized-4 btn-customized-dark" href="#" role="button">
+            <a
+              className="btn btn-primary btn-customized-4 btn-customized-dark"
+              href="#"
+              role="button"
+            >
               Dark
             </a>
-            <a className="btn btn-primary btn-customized-4 btn-customized-light" href="#" role="button">
+            <a
+              className="btn btn-primary btn-customized-4 btn-customized-light"
+              href="#"
+              role="button"
+            >
               Light
             </a>
           </div>
@@ -89,7 +105,11 @@ const sidebar = () => {
         <div className="overlay"></div>
 
         <div className="content">
-          <a className="btn btn-primary btn-customized open-menu" onClick={openSidebar} role="button">
+          <a
+            className="btn btn-primary btn-customized open-menu"
+            onClick={openSidebar}
+            role="button"
+          >
             <i className="fas fa-align-left"></i> <span>Menu</span>
           </a>
         </div>
