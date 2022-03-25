@@ -11,7 +11,7 @@ export interface User {
   readonly isSavedInFirebase: boolean;
 }
 
-export const UserBuilder = <Builder<User>>{};
+export const UserBuilder = {} as Builder<User>;
 
 export interface GoogleCreds {
   readonly idToken: string;

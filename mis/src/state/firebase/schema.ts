@@ -5,7 +5,7 @@ import {
   SnapshotOptions,
   WithFieldValue,
 } from 'firebase/firestore';
-import {User, UserBuilder} from 'models/user';
+import {User} from 'models/user';
 
 interface Collection {
   name: string;
@@ -32,12 +32,12 @@ export class UserConverter implements FirestoreDataConverter<User> {
     options?: SnapshotOptions,
   ): User {
     const data = snapshot.data(options);
-    return UserBuilder.email(data.email)
-      .name(data.name)
-      .photoUrl(data.photoUrl)
-      .isSavedInFirebase(true)
-      .linkedInProfile(data.linkedInProfile)
-      .hasLoggedIn(true)
-      .build();
+    return <User>{
+      email: data.email,
+      name: data.name,
+      isSavedInFirebase: data.isSavedInFirebase,
+      linkedInProfile: data.linkedInProfile,
+      hasLoggedIn: true,
+    };
   }
 }

@@ -5,6 +5,7 @@ import LoginCard from './login-card';
 import {useAppSelector} from 'state/hooks';
 import {RootState} from 'state/store';
 import {UserProfile} from 'models/user';
+import {useNavigate} from 'react-router-dom';
 
 /**
  *
@@ -14,9 +15,14 @@ export default function Login(): JSX.Element {
   const existingUser = useAppSelector(
     (state: RootState) => state.user,
   ) as UserProfile;
+
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // if(existingUser.user.hasLoggedIn) {
-    // }
+    console.log('is user saved in firebase', existingUser?.user?.hasLoggedIn);
+    if (existingUser?.user?.hasLoggedIn) {
+      navigate('/', {replace: true});
+    }
     console.log('login component', existingUser);
   });
 

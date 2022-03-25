@@ -22,6 +22,8 @@ async function saveData_(userProfile: UserProfile): Promise<void> {
   const email = userProfile.user.email;
   const userData = (await userDataFirebase_(email)) as User;
 
+  console.log('data from firestore', userData);
+
   // Save user data in firebase if absent.
   if (!userData) {
     saveInFirebase_(userProfile);
@@ -32,15 +34,16 @@ async function saveData_(userProfile: UserProfile): Promise<void> {
         isSavedInFirebase: true,
       },
     };
-
-    // Once the data is confirmed to be present inside firebase, we
-    // can save it in local storage as well.
-    saveInLocalStorage_(email, userProfile);
   }
+  // Once the data is confirmed to be present inside firebase, we
+  // can save it in local storage as well.
+  saveInLocalStorage_(email, userProfile);
 }
 
 function saveInLocalStorage_(email: string, userProfile: UserProfile): void {
   const userData = localStorage.getItem(email);
+
+  console.log('Userdata in local storage', userData);
   if (userData != null) {
     return;
   }
