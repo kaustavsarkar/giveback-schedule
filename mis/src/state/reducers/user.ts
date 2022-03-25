@@ -1,13 +1,27 @@
 import {CaseReducer, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import {createSlice} from '@reduxjs/toolkit';
-import {UserProfile} from 'models/user';
+import {User, UserProfile} from 'models/user';
 import {userSignIn} from 'modules/auth/signin';
 import {RootState} from 'state/store';
 
 // Define type of state to be used in reducer.
 type State = UserProfile;
 
-const initialState = <UserProfile>{};
+const initialState = (function () {
+  const email = localStorage.getItem('email');
+  if (email == null) {
+    return <UserProfile>{};
+  }
+
+  const userData = localStorage.getItem(email);
+
+  if (userData == null) {
+    return <UserProfile>{};
+  }
+
+  const object: User = JSON.parse(userData);
+  return <UserProfile>{user: object};
+})();
 
 export const loginUser = createAsyncThunk('user/login', userSignIn);
 

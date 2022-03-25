@@ -35,6 +35,7 @@ async function saveData_(userProfile: UserProfile): Promise<void> {
       },
     };
   }
+  saveEmail_(email);
   // Once the data is confirmed to be present inside firebase, we
   // can save it in local storage as well.
   saveInLocalStorage_(email, userProfile);
@@ -71,4 +72,8 @@ async function userDataFirebase_(email: string): Promise<User | null> {
   }
 
   return userData.data();
+}
+
+function saveEmail_(email: string): void {
+  localStorage.setItem('email', email);
 }
