@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './login.scss';
 import './login-card';
 import LoginCard from './login-card';
@@ -21,7 +21,7 @@ export default function Login(): JSX.Element {
   useEffect(() => {
     console.log('is user saved in firebase', existingUser?.user?.hasLoggedIn);
     if (existingUser?.user?.hasLoggedIn) {
-      navigate('/', {replace: true});
+      navigate('/profile', {replace: true});
     }
     console.log('login component', existingUser);
   });
