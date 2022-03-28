@@ -24,8 +24,17 @@
   }
 }
 
-.card .card-body {
-  color: #f87533;
+.card-body {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+
+@media only screen and (max-width: 575px) {
+  .card-body {
+    padding: 1rem;
+  }
 }
 
 .text-muted {
@@ -33,5 +42,5 @@
 }
 
 .row {
-    margin: auto;
+  margin: auto;
 }

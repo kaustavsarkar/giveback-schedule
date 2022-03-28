@@ -1,0 +1,29 @@
+.light.btn-primary {
+  background-color: rgba(19, 180, 151, 0.2);
+  border-color: transparent;
+  fill: #fff;
+  color: #13b497;
+
+  &:hover {
+    background-color: #13b497;
+    border-color: #13b497;
+    color: #fff;
+  }
+}
+
+.btn {
+  padding: 0.938rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem !important;
+}
+
+.btn-xs {
+  font-size: 0.75rem;
+  padding: 0.438rem 1rem;
+  font-weight: 600;
+}
