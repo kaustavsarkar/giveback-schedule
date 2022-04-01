@@ -9,6 +9,12 @@ export interface User {
   readonly photoUrl: string;
   readonly linkedInProfile: string;
   readonly isSavedInFirebase: boolean;
+  readonly designation: string;
+  readonly skills: Array<string>;
+  readonly languages: Array<string>;
+  readonly yearsOfExperience: number;
+  readonly organisation: string;
+  readonly aboutMe: string;
 }
 
 export const UserBuilder = {} as Builder<User>;
