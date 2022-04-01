@@ -15,7 +15,14 @@ function Skill_(skill: ISkill): JSX.Element {
 }
 
 export default function Skills(props: {skills: Array<string>}): JSX.Element {
-  const skillComponents = props.skills.map((skill, index) => (
+  let skills = props.skills as Array<string>;
+
+  // If the user has not selected any of the skills assign a default value
+  // to it.
+  if (!skills) {
+    skills = [];
+  }
+  const skillComponents = skills.map((skill, index) => (
     <Skill_ value={skill} key={`${index}`} />
   ));
   return (

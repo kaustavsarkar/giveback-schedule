@@ -1,28 +1,46 @@
 import './profile.scss';
-import {UserProfile} from 'models/user';
+import {User, UserProfile} from 'models/user';
 import React from 'react';
 import {useAppSelector} from 'state/hooks';
 import {RootState} from 'state/store';
 import ProfileHead from './profile-head';
 import ScheduleAgg from './schedule-agg';
 import AboutMe from './aboutme';
+import Skills from './skills';
+import Languages from './languages';
+import PersonalInfo from './personal-info';
 
 export default function ProfilePage(): JSX.Element {
   const userProfile = useAppSelector(
     (state: RootState) => state.user,
   ) as UserProfile;
   const profilePhoto = userProfile.user.photoUrl as string;
-  const name = userProfile.user.name as string;
-  const email = userProfile.user.email as string;
+  const user = userProfile.user as User;
+  const name = user.name as string;
+  const email = user.email as string;
+  const designation = user.designation as string;
+  const skills = user.skills as Array<string>;
+  const languages = user.languages as Array<string>;
+  const aboutMe = user.aboutMe as string;
   return (
     <>
       {' '}
-      <ProfileHead profilePhoto={profilePhoto} name={name} email={email} />
+      <ProfileHead
+        profilePhoto={profilePhoto}
+        name={name}
+        email={email}
+        designation={designation}
+      />
       <div className="row">
         <div className="col-xl-8">
           <div className="card">
             <div className="card-body">
-              <AboutMe user={userProfile.user} />
+              <div id="about-me" className="tab-pane aboutMe">
+                <AboutMe aboutMe={aboutMe} />
+                <Skills skills={skills} />
+                <Languages languages={languages} />
+                <PersonalInfo name={name} email={email} />
+              </div>
             </div>{' '}
           </div>{' '}
         </div>{' '}

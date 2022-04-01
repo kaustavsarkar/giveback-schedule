@@ -12,12 +12,19 @@ function Language_(props: {language: string}): JSX.Element {
 export default function Languages(props: {
   languages: Array<string>;
 }): JSX.Element {
-  const langaugeComps = props.languages.map((langauge, index) => (
+  let languages = props.languages as Array<string>;
+
+  // If the user has not selected any of the languages assign a default value
+  // to it.
+  if (!languages) {
+    languages = [];
+  }
+  const langaugeComps = languages.map((langauge, index) => (
     <Language_ language={langauge} key={index} />
   ));
   return (
     <div className="profile-lang  mb-5">
-      <h4 className="text-primary mb-2"> Language </h4> {langaugeComps}
+      <h4 className="text-primary mb-2"> Languages </h4> {langaugeComps}
     </div>
   );
 }

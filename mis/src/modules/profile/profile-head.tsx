@@ -5,12 +5,14 @@ interface Props_ {
   profilePhoto?: string;
   name?: string;
   email?: string;
+  designation?: string;
 }
 
 export default function ProfileHead({
   profilePhoto,
   name,
   email,
+  designation,
 }: Props_): JSX.Element {
   return (
     <div className="row">
@@ -30,7 +32,8 @@ export default function ProfileHead({
               </div>{' '}
               <div className="profile-details">
                 <div className="profile-name px-3 pt-2">
-                  <h4 className="mb-0"> {name} </h4> <p> UX / UI Designer </p>{' '}
+                  <h4 className="mb-0"> {name} </h4>{' '}
+                  <p> {designation ?? 'n/a'} </p>{' '}
                 </div>{' '}
                 <div className="profile-email px-2 pt-2">
                   <h4 className="text-muted mb-0">{email}</h4> <p> Email </p>{' '}
