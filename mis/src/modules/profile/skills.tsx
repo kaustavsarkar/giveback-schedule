@@ -1,5 +1,6 @@
 import './skills.scss';
 import React from 'react';
+import EditButton from 'shared/edit-button/edit-button';
 
 interface ISkill {
   value: string;
@@ -27,7 +28,12 @@ export default function Skills(props: {skills: Array<string>}): JSX.Element {
   ));
   return (
     <div className="profile-skills mb-5">
-      <h4 className="text-primary mb-2"> Skills </h4> {skillComponents}
+      <h4 className="text-primary mb-2">
+        {' '}
+        Skills
+        <EditButton />{' '}
+      </h4>{' '}
+      {skillComponents}
     </div>
   );
 }

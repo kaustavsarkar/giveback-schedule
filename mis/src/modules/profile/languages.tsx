@@ -1,5 +1,6 @@
 import './languages.scss';
 import React from 'react';
+import EditButton from 'shared/edit-button/edit-button';
 
 function Language_(props: {language: string}): JSX.Element {
   return (
@@ -24,7 +25,11 @@ export default function Languages(props: {
   ));
   return (
     <div className="profile-lang  mb-5">
-      <h4 className="text-primary mb-2"> Languages </h4> {langaugeComps}
+      <h4 className="text-primary mb-2">
+        {' '}
+        Languages <EditButton />
+      </h4>{' '}
+      {langaugeComps}
     </div>
   );
 }

@@ -1,0 +1,22 @@
+.btn-outline-primary {
+  color: #13b497;
+  border-color: #13b497;
+  margin-left: 1em;
+
+  &:hover {
+    border-color: #13b497;
+    color: #fff;
+    background-color: hsl(169, 81%, 39%);
+
+    &:after {
+      color: #fff;
+    }
+  }
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.765625rem !important;
+  line-height: 1.5;
+  border-radius: 0.75rem !important;
+}

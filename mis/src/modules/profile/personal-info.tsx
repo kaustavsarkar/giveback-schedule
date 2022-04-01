@@ -1,5 +1,6 @@
 import './personal-info.scss';
 import React from 'react';
+import EditButton from 'shared/edit-button/edit-button';
 
 export default function PersonalInfo(props: {
   name: string;
@@ -10,7 +11,9 @@ export default function PersonalInfo(props: {
 }): JSX.Element {
   return (
     <div className="profile-personal-info">
-      <h4 className="text-primary mb-4">Personal Information </h4>{' '}
+      <h4 className="text-primary mb-4">
+        Personal Information <EditButton />
+      </h4>{' '}
       <div className="row mb-2">
         <div className="col-4">
           <h5 className="f-w-500">
