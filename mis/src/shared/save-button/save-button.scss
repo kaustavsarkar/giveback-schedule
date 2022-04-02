@@ -1,0 +1,16 @@
+.btn-solid-primary {
+  color: #fff;
+  border-color: #13b497;
+  margin-left: 1em;
+  background-color: hsl(169, 81%, 39%);
+
+  &:hover {
+    border-color: #13b497;
+    color: #13b497;
+    background-color: transparent;
+
+    &:after {
+      color: #13b497;
+    }
+  }
+}
