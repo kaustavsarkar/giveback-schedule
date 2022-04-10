@@ -2,10 +2,6 @@ import {CaseReducer, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import {createSlice} from '@reduxjs/toolkit';
 import {User, UserProfile} from 'models/user';
 import {userSignIn} from 'modules/auth/signin';
-import {RootState} from 'state/store';
-
-// Define type of state to be used in reducer.
-type State = UserProfile;
 
 const initialState = (function () {
   const email = localStorage.getItem('email');
@@ -27,9 +23,12 @@ export const loginUser = createAsyncThunk('user/login', userSignIn);
 
 // Reducer for user login.
 const loginReducer: CaseReducer<
-  State,
+  UserProfile,
   PayloadAction<UserProfile | undefined, string>
-> = (state: State, action: PayloadAction<UserProfile | undefined, string>) => {
+> = (
+  state: UserProfile,
+  action: PayloadAction<UserProfile | undefined, string>,
+) => {
   console.log('inside reducer', state, action);
   state = action.payload ?? initialState;
   return state;
@@ -40,7 +39,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // login: loginReducer,
+    updateUser(state: UserProfile, action: PayloadAction<UserProfile>) {
+      console.log('update user reducer', state, action);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, loginReducer);
@@ -58,5 +59,5 @@ const userSlice = createSlice({
  * @param {RootState} state current state of the application.
  * @return {UserProfile} User saved in the state.
  */
-export const user = (state: RootState): UserProfile => state.user;
 export default userSlice.reducer;
+export const {updateUser} = userSlice.actions;
