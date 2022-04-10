@@ -15,7 +15,7 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     'quote-props': [1, 'as-needed'],
-    indent: ['error', 2, {MemberExpression: 'off'}],
+    indent: 'off',
   },
   settings: {
     react: {
