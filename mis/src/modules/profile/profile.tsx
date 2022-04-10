@@ -12,7 +12,7 @@ import PersonalInfo from './personal-info';
 
 export default function ProfilePage(): JSX.Element {
   const userProfile = useAppSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.userPofile,
   ) as UserProfile;
   const profilePhoto = userProfile.user.photoUrl as string;
   const user = userProfile.user as User;

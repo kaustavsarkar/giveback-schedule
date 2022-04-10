@@ -17,7 +17,9 @@ export const PrivateRoute = ({
 }: {
   redirectTo: string;
 }): JSX.Element => {
-  const existingUser = useAppSelector((state) => state.user) as UserProfile;
+  const existingUser = useAppSelector(
+    (state) => state.userPofile,
+  ) as UserProfile;
   const isLoggedIn = existingUser?.user?.hasLoggedIn;
   if (!isLoggedIn) {
     return <Navigate to={redirectTo} replace></Navigate>;

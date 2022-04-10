@@ -11,7 +11,7 @@ import {RootState} from 'state/store';
  */
 export default function LoginCard(): JSX.Element {
   const existingUser = useAppSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.userPofile,
   ) as UserProfile;
   const dispatch = useAppDispatch();
   const handleGoogleLogin = (event: React.MouseEvent<HTMLDivElement>) => {

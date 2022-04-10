@@ -13,7 +13,7 @@ import {useNavigate} from 'react-router-dom';
  */
 export default function Login(): JSX.Element {
   const existingUser = useAppSelector(
-    (state: RootState) => state.user,
+    (state: RootState) => state.userPofile,
   ) as UserProfile;
 
   const navigate = useNavigate();
