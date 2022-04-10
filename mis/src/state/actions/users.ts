@@ -26,6 +26,7 @@ export const updateAboutMe =
     await updateDoc(userRef, {
       aboutMe: aboutMe,
     });
+    localStorage.setItem(user.email, JSON.stringify(updatedUserProfile.user));
     dispatch(updateUser(updatedUserProfile));
     return updatedUserProfile;
   };
