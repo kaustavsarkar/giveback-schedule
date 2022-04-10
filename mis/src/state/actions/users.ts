@@ -1,11 +1,31 @@
-import {UserProfile} from 'models/user';
+import {doc, updateDoc} from 'firebase/firestore';
+import {fsDatabase} from 'gfirebase/firebase';
+import {User, UserProfile} from 'models/user';
+import {UserCollection} from 'state/firebase/schema';
 import {updateUser} from 'state/reducers/user';
 import {AppDispatch, RootState, UserThunk} from 'state/store';
 
-export const updateUserThunk =
-  (): UserThunk => (dispatch: AppDispatch, getState: () => RootState) => {
-    console.log('thunk action', getState());
+export const updateAboutMe =
+  (aboutMe: string): UserThunk =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
     const userProfile = getState().userPofile as UserProfile;
-    dispatch(updateUser(userProfile));
-    return <UserProfile>{};
+    aboutMe = aboutMe.trim();
+    if (aboutMe == undefined || aboutMe.length == 0) {
+      console.log('returning since there is nothing');
+      return userProfile;
+    }
+    const user = userProfile.user as User;
+    const updatedUserProfile = <UserProfile>{
+      ...userProfile,
+      user: <User>{
+        ...user,
+        aboutMe: aboutMe,
+      },
+    };
+    const userRef = doc(fsDatabase, UserCollection.name, user.email);
+    await updateDoc(userRef, {
+      aboutMe: aboutMe,
+    });
+    dispatch(updateUser(updatedUserProfile));
+    return updatedUserProfile;
   };

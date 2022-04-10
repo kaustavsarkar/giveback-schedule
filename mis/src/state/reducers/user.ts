@@ -41,6 +41,8 @@ const userSlice = createSlice({
   reducers: {
     updateUser(state: UserProfile, action: PayloadAction<UserProfile>) {
       console.log('update user reducer', state, action);
+      state = action.payload ?? initialState;
+      return state;
     },
   },
   extraReducers: (builder) => {

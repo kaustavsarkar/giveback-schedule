@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import EditButton from 'shared/edit-button/edit-button';
 import SaveButton from 'shared/save-button/save-button';
 import {useAppDispatch} from 'state/hooks';
-import {updateUserThunk} from 'state/actions/users';
+import {updateAboutMe} from 'state/actions/users';
 
 export default function AboutMe(props: {aboutMe: string}): JSX.Element {
   const [isEdit, setEdit] = useState(false);
@@ -16,8 +16,12 @@ export default function AboutMe(props: {aboutMe: string}): JSX.Element {
   };
 
   const onSave: React.MouseEventHandler<HTMLDivElement> = () => {
-    console.log('on save');
-    dispatch(updateUserThunk());
+    console.log('on save', aboutMeText);
+    if (props.aboutMe == aboutMeText) {
+      setEdit(false);
+      return;
+    }
+    dispatch(updateAboutMe(aboutMeText));
     setEdit(false);
   };
 

@@ -15,4 +15,9 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export type UserThunk = ThunkAction<UserProfile, RootState, unknown, AnyAction>;
+export type UserThunk = ThunkAction<
+  Promise<UserProfile>,
+  RootState,
+  unknown,
+  AnyAction
+>;

@@ -14,6 +14,7 @@ export default function ProfilePage(): JSX.Element {
   const userProfile = useAppSelector(
     (state: RootState) => state.userPofile,
   ) as UserProfile;
+  console.log('Profile Page', userProfile);
   const profilePhoto = userProfile.user.photoUrl as string;
   const user = userProfile.user as User;
   const name = user.name as string;
