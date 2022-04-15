@@ -36,7 +36,7 @@ const loginReducer: CaseReducer<
 
 // Used for creating action creators and types imlicitly.
 const userSlice = createSlice({
-  name: 'user',
+  name: 'userProfile',
   initialState,
   reducers: {
     updateUser(state: UserProfile, action: PayloadAction<UserProfile>) {
@@ -50,11 +50,6 @@ const userSlice = createSlice({
   },
 });
 
-// Actions exported from the slice.
-//
-// Actions are to be added as when they are added here.
-// export const {login} = userSlice.actions;
-
 /**
  * The current user present in the state.
  *
@@ -62,4 +57,7 @@ const userSlice = createSlice({
  * @return {UserProfile} User saved in the state.
  */
 export default userSlice.reducer;
+// Actions exported from the slice.
+//
+// Actions are to be added as when they are added here.
 export const {updateUser} = userSlice.actions;
