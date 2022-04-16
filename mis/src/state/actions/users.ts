@@ -8,7 +8,7 @@ import {AppDispatch, RootState, UserThunk} from 'state/store';
 export const updateAboutMe =
   (aboutMe: string): UserThunk =>
   async (dispatch: AppDispatch, getState: () => RootState) => {
-    const userProfile = getState().userPofile as UserProfile;
+    const userProfile = getState().userProfile as UserProfile;
     aboutMe = aboutMe.trim();
     if (aboutMe == undefined || aboutMe.length == 0) {
       console.log('returning since there is nothing');

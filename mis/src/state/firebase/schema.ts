@@ -5,6 +5,7 @@ import {
   SnapshotOptions,
   WithFieldValue,
 } from 'firebase/firestore';
+import {Skills} from 'models/skills';
 import {User} from 'models/user';
 
 interface Collection {
@@ -13,6 +14,11 @@ interface Collection {
 
 export class UserCollection implements Collection {
   name = 'User';
+}
+
+export class SkillsCollection implements Collection {
+  name = 'Skills';
+  static key = 'skills';
 }
 
 // Helps in conversion from {DocumentData} to {User} and vice versa.
@@ -38,6 +44,24 @@ export class UserConverter implements FirestoreDataConverter<User> {
       isSavedInFirebase: data.isSavedInFirebase,
       linkedInProfile: data.linkedInProfile,
       hasLoggedIn: true,
+    };
+  }
+}
+
+export class SkillsConverter implements FirestoreDataConverter<Skills> {
+  toFirestore(skills: WithFieldValue<Skills>): DocumentData {
+    return {
+      skills: skills.skills,
+    };
+  }
+
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot<DocumentData>,
+    options?: SnapshotOptions,
+  ): Skills {
+    const data = snapshot.data(options);
+    return <Skills>{
+      skills: data.skills,
     };
   }
 }

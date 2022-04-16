@@ -2,6 +2,8 @@ import './skills.scss';
 import React, {useState} from 'react';
 import EditButton from 'shared/edit-button/edit-button';
 import SaveButton from 'shared/save-button/save-button';
+import {useAppDispatch} from 'state/hooks';
+import {getAllSkills} from 'state/actions/skills';
 
 interface ISkill {
   value: string;
@@ -16,9 +18,15 @@ function Skill_(skill: ISkill): JSX.Element {
   );
 }
 
+function EditSkills_(props: {skills: Array<string>}): JSX.Element {
+  return <></>;
+}
+
 export default function Skills(props: {skills: Array<string>}): JSX.Element {
   const [isEdit, setEdit] = useState(false);
   let skills = props.skills as Array<string>;
+
+  const dispatch = useAppDispatch();
 
   // If the user has not selected any of the skills assign a default value
   // to it.
@@ -30,6 +38,8 @@ export default function Skills(props: {skills: Array<string>}): JSX.Element {
   ));
 
   const onSave: React.MouseEventHandler<HTMLDivElement> = () => {
+    console.log('saving skills');
+    dispatch(getAllSkills());
     setEdit(false);
   };
 
