@@ -4,8 +4,11 @@ import EditButton from 'shared/edit-button/edit-button';
 import SaveButton from 'shared/save-button/save-button';
 import {useAppDispatch} from 'state/hooks';
 import {getAllSkills} from 'state/actions/skills';
-import Select from 'react-select';
-import SelectOption, {defaultOptionsStyle} from 'models/select-options';
+import Select, {OnChangeValue} from 'react-select';
+import SelectOption, {
+  defaultOptionsStyle,
+  OnChange,
+} from 'models/select-options';
 
 interface ISkill {
   value: string;
@@ -23,6 +26,7 @@ function Skill_(skill: ISkill): JSX.Element {
 function EditSkills_(props: {
   existingSkills: Array<SelectOption>;
   allSkills: Array<SelectOption>;
+  onChange: OnChange;
 }): JSX.Element {
   console.log(
     'existing skills',
@@ -34,6 +38,7 @@ function EditSkills_(props: {
     <Select
       closeMenuOnSelect={false}
       isSearchable
+      onChange={props.onChange}
       defaultValue={props.existingSkills}
       isMulti
       name="skills"
@@ -48,21 +53,17 @@ export default function Skills(props: {
   allSkills: Array<string>;
 }): JSX.Element {
   const [isEdit, setEdit] = useState(false);
-  let existingSkills = props.existingSkills as Array<string>;
+  const [userSkills, setUserSkills] = useState(
+    props.existingSkills ?? Array<string>(),
+  );
   const allSkills = props.allSkills;
 
-  console.log('skills component', allSkills, existingSkills);
+  console.log('skills component', allSkills, userSkills);
 
   const dispatch = useAppDispatch();
 
-  // If the user has not selected any of the skills assign a default value
-  // to it.
-  if (!existingSkills) {
-    existingSkills = Array<string>();
-  }
-
   const onSave: React.MouseEventHandler<HTMLDivElement> = () => {
-    console.log('saving skills');
+    console.log('saving skills', userSkills);
     setEdit(false);
   };
 
@@ -74,9 +75,7 @@ export default function Skills(props: {
   const skillComponents = isEdit ? (
     <></>
   ) : (
-    existingSkills.map((skill, index) => (
-      <Skill_ value={skill} key={`${index}`} />
-    ))
+    userSkills.map((skill, index) => <Skill_ value={skill} key={`${index}`} />)
   );
 
   const allSkillsOption = isEdit
@@ -84,7 +83,7 @@ export default function Skills(props: {
     : Array<SelectOption>();
 
   const existingSkillsOption = isEdit
-    ? existingSkills.map(mapSkillToOption_)
+    ? userSkills.map(mapSkillToOption_)
     : Array<SelectOption>();
 
   return (
@@ -102,6 +101,9 @@ export default function Skills(props: {
         <EditSkills_
           allSkills={allSkillsOption}
           existingSkills={existingSkillsOption}
+          onChange={(newValues: OnChangeValue<SelectOption, true>) => {
+            setUserSkills(newValues.map((value) => value.value));
+          }}
         />
       ) : (
         skillComponents

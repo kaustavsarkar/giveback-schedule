@@ -1,4 +1,4 @@
-import {StylesConfig} from 'react-select';
+import {ActionMeta, MultiValue, StylesConfig} from 'react-select';
 
 export default interface SelectOption {
   readonly value: string;
@@ -42,3 +42,8 @@ export const defaultOptionsStyle: StylesConfig<SelectOption, true> = {
     color: '#fff',
   }),
 };
+
+export type OnChange = (
+  newValue: MultiValue<SelectOption>,
+  actionMeta: ActionMeta<SelectOption>,
+) => void;
