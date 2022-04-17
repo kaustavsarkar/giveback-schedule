@@ -11,7 +11,6 @@ export interface User {
   readonly isSavedInFirebase: boolean;
   readonly designation: string;
   readonly skills: Array<string>;
-  readonly languages: Array<string>;
   readonly yearsOfExperience: number;
   readonly organisation: string;
   readonly aboutMe: string;

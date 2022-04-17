@@ -7,7 +7,6 @@ import ProfileHead from './profile-head';
 import ScheduleAgg from './schedule-agg';
 import AboutMe from './aboutme';
 import Skills from './skills';
-import Languages from './languages';
 import PersonalInfo from './personal-info';
 
 export default function ProfilePage(): JSX.Element {
@@ -24,7 +23,6 @@ export default function ProfilePage(): JSX.Element {
   const email = user.email as string;
   const designation = user.designation as string;
   const skills = user.skills as Array<string>;
-  const languages = user.languages as Array<string>;
   const aboutMe = user.aboutMe as string;
   return (
     <>
@@ -42,7 +40,6 @@ export default function ProfilePage(): JSX.Element {
               <div id="about-me" className="tab-pane aboutMe">
                 <AboutMe aboutMe={aboutMe} />
                 <Skills existingSkills={skills} allSkills={allSkills} />
-                <Languages languages={languages} />
                 <PersonalInfo name={name} email={email} />
               </div>
             </div>{' '}
