@@ -1,6 +1,15 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-const initialState = Array<string>();
+const initialState = () => {
+  const skillsData = localStorage.getItem('skills');
+
+  if (skillsData == null) {
+    return Array<string>();
+  }
+
+  const skills: Array<string> = JSON.parse(skillsData);
+  return skills;
+};
 
 // Used for creating action creators and types implicitly.
 const skillSlice = createSlice({

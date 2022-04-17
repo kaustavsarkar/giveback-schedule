@@ -42,13 +42,13 @@ async function getDataFromFirestore_(): Promise<Skills | null> {
 
   const skills = (await getDoc(skillsRef)) as DocumentSnapshot<Skills>;
 
-  updateLocalStorage_([]);
-
   console.log(skills.data()?.skills);
 
   if (!skills.exists()) {
     return null;
   }
+
+  updateLocalStorage_(skills.data().skills);
 
   return skills.data();
 }

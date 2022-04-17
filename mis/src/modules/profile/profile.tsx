@@ -14,6 +14,9 @@ export default function ProfilePage(): JSX.Element {
   const userProfile = useAppSelector(
     (state: RootState) => state.userProfile,
   ) as UserProfile;
+  const allSkills = useAppSelector(
+    (state: RootState) => state.skills,
+  ) as Array<string>;
   console.log('Profile Page', userProfile);
   const profilePhoto = userProfile.user.photoUrl as string;
   const user = userProfile.user as User;
@@ -38,7 +41,7 @@ export default function ProfilePage(): JSX.Element {
             <div className="card-body">
               <div id="about-me" className="tab-pane aboutMe">
                 <AboutMe aboutMe={aboutMe} />
-                <Skills skills={skills} />
+                <Skills existingSkills={skills} allSkills={allSkills} />
                 <Languages languages={languages} />
                 <PersonalInfo name={name} email={email} />
               </div>

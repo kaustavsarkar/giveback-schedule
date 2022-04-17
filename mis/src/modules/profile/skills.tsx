@@ -4,6 +4,8 @@ import EditButton from 'shared/edit-button/edit-button';
 import SaveButton from 'shared/save-button/save-button';
 import {useAppDispatch} from 'state/hooks';
 import {getAllSkills} from 'state/actions/skills';
+import Select from 'react-select';
+import SelectOption, {defaultOptionsStyle} from 'models/select-options';
 
 interface ISkill {
   value: string;
@@ -18,34 +20,72 @@ function Skill_(skill: ISkill): JSX.Element {
   );
 }
 
-function EditSkills_(props: {skills: Array<string>}): JSX.Element {
-  return <></>;
+function EditSkills_(props: {
+  existingSkills: Array<SelectOption>;
+  allSkills: Array<SelectOption>;
+}): JSX.Element {
+  console.log(
+    'existing skills',
+    props.existingSkills,
+    'all skills',
+    props.allSkills,
+  );
+  return (
+    <Select
+      closeMenuOnSelect={false}
+      isSearchable
+      defaultValue={props.existingSkills}
+      isMulti
+      name="skills"
+      styles={defaultOptionsStyle}
+      options={props.allSkills}
+    ></Select>
+  );
 }
 
-export default function Skills(props: {skills: Array<string>}): JSX.Element {
+export default function Skills(props: {
+  existingSkills: Array<string>;
+  allSkills: Array<string>;
+}): JSX.Element {
   const [isEdit, setEdit] = useState(false);
-  let skills = props.skills as Array<string>;
+  let existingSkills = props.existingSkills as Array<string>;
+  const allSkills = props.allSkills;
+
+  console.log('skills component', allSkills, existingSkills);
 
   const dispatch = useAppDispatch();
 
   // If the user has not selected any of the skills assign a default value
   // to it.
-  if (!skills) {
-    skills = [];
+  if (!existingSkills) {
+    existingSkills = Array<string>();
   }
-  const skillComponents = skills.map((skill, index) => (
-    <Skill_ value={skill} key={`${index}`} />
-  ));
 
   const onSave: React.MouseEventHandler<HTMLDivElement> = () => {
     console.log('saving skills');
-    dispatch(getAllSkills());
     setEdit(false);
   };
 
   const onEdit: React.MouseEventHandler<HTMLDivElement> = () => {
+    dispatch(getAllSkills(allSkills.length < 1));
     setEdit(true);
   };
+
+  const skillComponents = isEdit ? (
+    <></>
+  ) : (
+    existingSkills.map((skill, index) => (
+      <Skill_ value={skill} key={`${index}`} />
+    ))
+  );
+
+  const allSkillsOption = isEdit
+    ? allSkills.map(mapSkillToOption_)
+    : Array<SelectOption>();
+
+  const existingSkillsOption = isEdit
+    ? existingSkills.map(mapSkillToOption_)
+    : Array<SelectOption>();
 
   return (
     <div className="profile-skills mb-5">
@@ -58,7 +98,18 @@ export default function Skills(props: {skills: Array<string>}): JSX.Element {
           <EditButton onClick={onEdit} />
         )}{' '}
       </h4>{' '}
-      {skillComponents}
+      {isEdit ? (
+        <EditSkills_
+          allSkills={allSkillsOption}
+          existingSkills={existingSkillsOption}
+        />
+      ) : (
+        skillComponents
+      )}
     </div>
   );
+}
+
+function mapSkillToOption_(skill: string): SelectOption {
+  return {label: skill, value: skill} as SelectOption;
 }
