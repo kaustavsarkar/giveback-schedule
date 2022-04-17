@@ -7,3 +7,5 @@ Theme: https://karciz.dexignzone.com/react/demo/app-calender
 
 Prettier: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 Linter: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslintbpack
+
+React Scheduler Component: https://devexpress.github.io/devextreme-reactive/react/scheduler/docs/guides/getting-started/
