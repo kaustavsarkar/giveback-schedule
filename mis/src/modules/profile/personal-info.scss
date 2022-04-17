@@ -5,3 +5,21 @@ h5 {
   color: #fff;
   font-size: 1rem;
 }
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input.form-control {
+  border-radius: 0.55rem;
+  height: 2.4em;
+  font-size: medium;
+}

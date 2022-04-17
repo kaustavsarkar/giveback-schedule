@@ -79,3 +79,34 @@ function haveSkillsUpdated_(
 
   return false;
 }
+
+export const updatePersonalInfo =
+  (designation: string, organisation: string, yoe: number): UserThunk =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    const userProfile = getState().userProfile;
+    if (!designation && !organisation && !yoe) {
+      console.log('Returning since there is nothing to update');
+      return userProfile;
+    }
+
+    const user = userProfile.user as User;
+    const updatedUserProfile = <UserProfile>{
+      ...userProfile,
+      user: <User>{
+        ...user,
+        designation: designation,
+        organisation: organisation,
+        yearsOfExperience: yoe,
+      },
+    };
+
+    const userRef = doc(fsDatabase, UserCollection.name, user.email);
+    await updateDoc(userRef, {
+      organisation: organisation,
+      designation: designation,
+      yoe: yoe,
+    });
+    localStorage.setItem(user.email, JSON.stringify(updatedUserProfile.user));
+    dispatch(updateUser(updatedUserProfile));
+    return updatedUserProfile;
+  };

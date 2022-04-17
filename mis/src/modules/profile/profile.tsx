@@ -24,6 +24,8 @@ export default function ProfilePage(): JSX.Element {
   const designation = user.designation as string;
   const skills = user.skills as Array<string>;
   const aboutMe = user.aboutMe as string;
+  const organisation = user.organisation as string;
+  const yoe = user.yearsOfExperience as number;
   return (
     <>
       {' '}
@@ -40,7 +42,13 @@ export default function ProfilePage(): JSX.Element {
               <div id="about-me" className="tab-pane aboutMe">
                 <AboutMe aboutMe={aboutMe} />
                 <Skills existingSkills={skills} allSkills={allSkills} />
-                <PersonalInfo name={name} email={email} />
+                <PersonalInfo
+                  name={name}
+                  email={email}
+                  designation={designation}
+                  organisation={organisation}
+                  yoe={yoe}
+                />
               </div>
             </div>{' '}
           </div>{' '}
