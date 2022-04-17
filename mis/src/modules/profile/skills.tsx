@@ -9,6 +9,7 @@ import SelectOption, {
   defaultOptionsStyle,
   OnChange,
 } from 'models/select-options';
+import {updateSkills} from 'state/actions/users';
 
 interface ISkill {
   value: string;
@@ -64,6 +65,7 @@ export default function Skills(props: {
 
   const onSave: React.MouseEventHandler<HTMLDivElement> = () => {
     console.log('saving skills', userSkills);
+    dispatch(updateSkills(userSkills));
     setEdit(false);
   };
 
