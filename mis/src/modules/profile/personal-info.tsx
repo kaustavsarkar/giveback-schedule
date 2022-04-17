@@ -1,6 +1,7 @@
 import './personal-info.scss';
-import React from 'react';
+import React, {useState} from 'react';
 import EditButton from 'shared/edit-button/edit-button';
+import SaveButton from 'shared/save-button/save-button';
 
 export default function PersonalInfo(props: {
   name: string;
@@ -9,10 +10,25 @@ export default function PersonalInfo(props: {
   designation?: string;
   yoe?: string;
 }): JSX.Element {
+  const [isEdit, setEdit] = useState(false);
+
+  const onSave: React.MouseEventHandler<HTMLDivElement> = () => {
+    setEdit(false);
+  };
+
+  const onEdit: React.MouseEventHandler<HTMLDivElement> = () => {
+    setEdit(true);
+  };
+
   return (
     <div className="profile-personal-info">
       <h4 className="text-primary mb-4">
-        Personal Information <EditButton />
+        Personal Information{' '}
+        {isEdit ? (
+          <SaveButton onClick={onSave} />
+        ) : (
+          <EditButton onClick={onEdit} />
+        )}
       </h4>{' '}
       <div className="row mb-2">
         <div className="col-4">
