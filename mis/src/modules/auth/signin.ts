@@ -27,14 +27,14 @@ async function saveData_(userProfile: UserProfile): Promise<void> {
   // Save user data in firebase if absent.
   if (!userData) {
     saveInFirebase_(userProfile);
-    userProfile = <UserProfile>{
-      ...userProfile,
-      user: <User>{
-        ...user,
-        isSavedInFirebase: true,
-      },
-    };
   }
+  userProfile = <UserProfile>{
+    ...userProfile,
+    user: <User>{
+      ...userData,
+      isSavedInFirebase: true,
+    },
+  };
   saveEmail_(email);
   // Once the data is confirmed to be present inside firebase, we
   // can save it in local storage as well.

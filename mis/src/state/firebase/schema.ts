@@ -44,6 +44,14 @@ export class UserConverter implements FirestoreDataConverter<User> {
       isSavedInFirebase: data.isSavedInFirebase,
       linkedInProfile: data.linkedInProfile,
       hasLoggedIn: true,
+      photoUrl: data?.photoUrl,
+      designation: data?.designation,
+      skills: data?.skills,
+      yearsOfExperience: data?.yoe,
+      organisation: data?.organisation,
+      aboutMe: data?.aboutMe,
+      isInterviewer: data?.isInterviewer,
+      isAdmin: data?.isAdmin,
     };
   }
 }
