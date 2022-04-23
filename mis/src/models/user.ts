@@ -14,6 +14,8 @@ export interface User {
   readonly yearsOfExperience: number;
   readonly organisation: string;
   readonly aboutMe: string;
+  readonly isInterviewer: boolean;
+  readonly isAdmin: boolean;
 }
 
 export const UserBuilder = {} as Builder<User>;
