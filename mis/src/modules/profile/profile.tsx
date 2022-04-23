@@ -13,6 +13,9 @@ export default function ProfilePage(): JSX.Element {
   const userProfile = useAppSelector(
     (state: RootState) => state.userProfile,
   ) as UserProfile;
+
+  console.log('profile page got the following userProfile: ', userProfile);
+
   const allSkills = useAppSelector(
     (state: RootState) => state.skills,
   ) as Array<string>;

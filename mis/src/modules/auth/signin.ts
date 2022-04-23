@@ -10,17 +10,15 @@ import {User, UserProfile} from 'models/user';
 import {fsDatabase} from 'gfirebase/firebase';
 import {UserCollection, UserConverter} from 'state/firebase/schema';
 import {googleSignIn} from './google_auth';
-import user from 'state/reducers/user';
 
 export const userSignIn = async () => {
   const userProfile = (await googleSignIn()) as UserProfile;
-  saveData_(userProfile);
-  return userProfile;
+  return await saveData_(userProfile);
 };
 
-async function saveData_(userProfile: UserProfile): Promise<void> {
+async function saveData_(userProfile: UserProfile): Promise<UserProfile> {
   const email = userProfile.user.email;
-  const userData = (await userDataFirebase_(email)) as User;
+  let userData = (await userDataFirebase_(email)) as User;
 
   console.log('data from firestore', userData);
 
@@ -28,6 +26,12 @@ async function saveData_(userProfile: UserProfile): Promise<void> {
   if (!userData) {
     saveInFirebase_(userProfile);
   }
+
+  userData = <User>{
+    ...userData,
+    ...userProfile.user,
+  };
+
   userProfile = <UserProfile>{
     ...userProfile,
     user: <User>{
@@ -39,6 +43,7 @@ async function saveData_(userProfile: UserProfile): Promise<void> {
   // Once the data is confirmed to be present inside firebase, we
   // can save it in local storage as well.
   saveInLocalStorage_(email, userProfile);
+  return userProfile;
 }
 
 function saveInLocalStorage_(email: string, userProfile: UserProfile): void {
