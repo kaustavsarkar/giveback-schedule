@@ -6,7 +6,7 @@ export default function CreateButton(props: {
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }): JSX.Element {
   return (
-    <div className="create-btn">
+    <div className="create-btn" onClick={props.onClick}>
       <div className="vertical"></div>
       <div className="horizontal"></div>
       <div className="create-btn-text">
