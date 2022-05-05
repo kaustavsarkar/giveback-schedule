@@ -1,6 +1,30 @@
-.create-sch .row {
-  justify-content: center;
-  padding-top: 10px;
+.create-sch {
+  & .row {
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  & .custom-control-label {
+    color: #b7b7b7;
+    height: 1.75rem;
+    min-inline-size: auto;
+  }
+
+  & .card-title {
+    color: #fff;
+  }
+
+  & .sched-progress {
+    max-width: 100%;
+    height: 100px;
+    width: 100px;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    padding-top: 1%;
+    border-radius: 50%;
+    box-shadow: 0px 5px 10px #888888;
+  }
 }
 
 input.custom-control-input {
@@ -13,22 +37,12 @@ input.custom-control-input {
   border: 2px solid #5e7084;
   cursor: pointer;
   border-radius: 0.25rem;
-  vertical-align:middle;
+  vertical-align: middle;
   margin-right: 4px;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out, -webkit-transform 0.15s ease-in-out;
   &:checked {
-    background-color: var(--rs-picker-value);;
-    border: 2px solid var(--rs-picker-value);;
+    background-color: var(--rs-picker-value);
+    border: 2px solid var(--rs-picker-value);
   }
-}
-
-.create-sch .custom-control-label {
-  color: #b7b7b7;
-  height: 1.75rem;
-  min-inline-size: auto;
-}
-
-.create-sch .card-title {
-  color: #fff;
 }
