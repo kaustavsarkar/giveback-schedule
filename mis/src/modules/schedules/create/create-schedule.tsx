@@ -7,6 +7,8 @@ import {DateRangePicker, Progress} from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import {DateRange} from 'rsuite/esm/DateRangePicker';
 
+type Time = [number, number] | null;
+
 export default function CreateSchedule(): JSX.Element {
   // Progress for each section shall be considered as 25% since we have only
   // 4 sections. Every section receives equal weightage.
@@ -15,8 +17,8 @@ export default function CreateSchedule(): JSX.Element {
   const [days, setDays] = useState(new Set<string>());
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(0);
+  const [startTime, setStartTime] = useState<Time>(null);
+  const [endTime, setEndTime] = useState<Time>(null);
 
   const allSkills = useAppSelector(
     (state: RootState) => state.skills,
@@ -80,14 +82,14 @@ export default function CreateSchedule(): JSX.Element {
 
   const handleTimeSelect = (value: DateRange | null) => {
     if (value) {
-      if (progress < 100 && (startTime == 0 || endTime == 0)) {
+      if (progress < 100 && (startTime == null || endTime == null)) {
         setProgress(progress + 25);
       }
-      setStartTime(value[0].getTime());
-      setEndTime(value[1].getTime());
+      setStartTime([value[0].getHours(), value[0].getMinutes()]);
+      setEndTime([value[1].getHours(), value[1].getMinutes()]);
     } else {
-      setStartTime(0);
-      setEndTime(0);
+      setStartTime(null);
+      setEndTime(null);
 
       if (progress > 0) {
         setProgress(progress - 25);
