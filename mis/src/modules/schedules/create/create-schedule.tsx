@@ -15,6 +15,8 @@ export default function CreateSchedule(): JSX.Element {
   const [days, setDays] = useState(new Set<string>());
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
 
   const allSkills = useAppSelector(
     (state: RootState) => state.skills,
@@ -69,6 +71,23 @@ export default function CreateSchedule(): JSX.Element {
     } else {
       setStartDate(null);
       setEndDate(null);
+
+      if (progress > 0) {
+        setProgress(progress - 25);
+      }
+    }
+  };
+
+  const handleTimeSelect = (value: DateRange | null) => {
+    if (value) {
+      if (progress < 100 && (startTime == 0 || endTime == 0)) {
+        setProgress(progress + 25);
+      }
+      setStartTime(value[0].getTime());
+      setEndTime(value[1].getTime());
+    } else {
+      setStartTime(0);
+      setEndTime(0);
 
       if (progress > 0) {
         setProgress(progress - 25);
@@ -148,7 +167,11 @@ export default function CreateSchedule(): JSX.Element {
                 <h4 className="card-title"> Crime Time? (Required) </h4>{' '}
               </div>{' '}
               <div className="card-body">
-                <DateRangePicker format="HH:mm:ss" ranges={[]} />
+                <DateRangePicker
+                  format="HH:mm:ss"
+                  ranges={[]}
+                  onChange={handleTimeSelect}
+                />
               </div>
             </div>
           </div>
