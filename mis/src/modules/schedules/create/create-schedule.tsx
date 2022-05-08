@@ -2,7 +2,7 @@ import './create-schedule.scss';
 import React, {useState} from 'react';
 import {useAppSelector} from 'state/hooks';
 import {RootState} from 'state/store';
-import SelectOptions from './select-skills';
+import SelectOptions from './select-options';
 import {DateRangePicker, Progress} from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 
@@ -11,6 +11,7 @@ export default function CreateSchedule(): JSX.Element {
   // 4 sections. Every section receives equal weightage.
   const [progress, setProgress] = useState(0);
   const [skills, setSkills] = useState(new Set<string>());
+  const [days, setDays] = useState(new Set<string>());
 
   const allSkills = useAppSelector(
     (state: RootState) => state.skills,
@@ -18,28 +19,38 @@ export default function CreateSchedule(): JSX.Element {
 
   const onSkillUpdate: React.ChangeEventHandler<HTMLInputElement> = (
     event: React.ChangeEvent<HTMLInputElement>,
+  ) => handleMultiSelect(skills, setSkills, event);
+
+  const onDaysUpdate: React.ChangeEventHandler<HTMLInputElement> = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => handleMultiSelect(days, setDays, event);
+
+  const handleMultiSelect = (
+    set: Set<string>,
+    setSet: React.Dispatch<React.SetStateAction<Set<string>>>,
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const isChecked = event.target.checked;
     const value = event.target.value;
     console.log('got value, ', value, ' is checked', isChecked);
-    console.log(skills);
+    console.log(set);
     if (isChecked) {
-      // Check if we already have selected Skills. If skills are already
+      // Check if we already have selected Options. If options are already
       // selected, no need to change the progress. Otherwise add to progress.
       // Ensure progress does not go beyond 100.
-      if (skills.size == 0 && progress < 100) {
+      if (set.size == 0 && progress < 100) {
         setProgress(progress + 25);
       }
 
-      setSkills(new Set(skills).add(value));
+      setSet(new Set(set).add(value));
     } else {
-      const newSkills = new Set(skills);
-      newSkills.delete(value);
-      setSkills(new Set(newSkills));
+      const newSet = new Set(set);
+      newSet.delete(value);
+      setSet(new Set(newSet));
 
-      // If user disselects all the skills then make the progress go 0.
+      // If user disselects all the options then make the progress go 0.
       // Make sure the value of progress does not go below zero.
-      if (skills.size == 1 && progress > 0) {
+      if (set.size == 1 && progress > 0) {
         setProgress(progress - 25);
       }
     }
@@ -80,6 +91,7 @@ export default function CreateSchedule(): JSX.Element {
                     'Saturday',
                     'Sunday',
                   ]}
+                  onChange={onDaysUpdate}
                 ></SelectOptions>
               </div>
             </div>
