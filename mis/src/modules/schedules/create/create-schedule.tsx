@@ -5,6 +5,7 @@ import {RootState} from 'state/store';
 import SelectOptions from './select-options';
 import {DateRangePicker, Progress} from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
+import {DateRange} from 'rsuite/esm/DateRangePicker';
 
 export default function CreateSchedule(): JSX.Element {
   // Progress for each section shall be considered as 25% since we have only
@@ -12,6 +13,8 @@ export default function CreateSchedule(): JSX.Element {
   const [progress, setProgress] = useState(0);
   const [skills, setSkills] = useState(new Set<string>());
   const [days, setDays] = useState(new Set<string>());
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   const allSkills = useAppSelector(
     (state: RootState) => state.skills,
@@ -55,6 +58,28 @@ export default function CreateSchedule(): JSX.Element {
       }
     }
   };
+
+  const handleDateSelect = (value: DateRange | null) => {
+    if (value) {
+      if (progress < 100 && (startDate == null || endDate == null)) {
+        setProgress(progress + 25);
+      }
+      setStartDate(value[0]);
+      setEndDate(value[1]);
+    } else {
+      setStartDate(null);
+      setEndDate(null);
+
+      if (progress > 0) {
+        setProgress(progress - 25);
+      }
+    }
+  };
+
+  const {combine, beforeToday, after} = DateRangePicker;
+  const today = new Date();
+  const threeMonthsFromNow = new Date();
+  threeMonthsFromNow.setDate(today.getDate() + 90);
 
   return (
     <div className="create-sch row">
@@ -104,7 +129,14 @@ export default function CreateSchedule(): JSX.Element {
                 <h4 className="card-title"> Which Date Mate (Required) </h4>{' '}
               </div>{' '}
               <div className="card-body">
-                <DateRangePicker />
+                <DateRangePicker
+                  limitEndYear={1}
+                  onChange={handleDateSelect}
+                  disabledDate={combine?.(
+                    beforeToday?.(),
+                    after?.(threeMonthsFromNow),
+                  )}
+                />
               </div>
             </div>
           </div>
