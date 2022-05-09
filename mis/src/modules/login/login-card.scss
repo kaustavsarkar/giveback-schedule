@@ -2,6 +2,7 @@
 @import '../../margins.scss';
 
 .login-card-container {
+  width: 56rem;
   max-width: 70%;
   background: #24292d;
   margin-left: auto;
@@ -52,4 +53,7 @@
   text-align: center;
   background: #f5f5dc;
   cursor: pointer;
+  :disabled {
+      opacity: 0.5;
+    }
 }

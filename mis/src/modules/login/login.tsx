@@ -24,7 +24,7 @@ export default function Login(): JSX.Element {
       navigate('/profile', {replace: true});
     }
     console.log('login component', existingUser);
-  });
+  }, [existingUser]);
 
   return (
     <div className="login-container">
