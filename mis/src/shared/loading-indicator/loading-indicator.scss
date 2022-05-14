@@ -1,0 +1,45 @@
+.loading-indicator-backgound{
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left:0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading-points {
+  background-color: #13b497;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  margin: 0 0.25rem;
+  animation-duration: 1s;
+  animation-name: loading;
+  animation-iteration-count: infinite;
+}
+
+.point-one{
+  animation-delay: 0;
+}
+.point-two{
+  animation-delay: 200ms;
+}
+.point-three{
+  animation-delay: 400ms;
+}
+
+
+@keyframes loading {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.75;
+  }
+  100% {
+    scale: 1;
+  }
+}
