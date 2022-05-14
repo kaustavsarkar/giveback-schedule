@@ -1,45 +1,63 @@
-.loading-indicator-backgound{
-  height: 100vh;
-  width: 100%;
-  background-color: white;
-  position: absolute;
-  top: 0;
-  left:0;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.loading-points {
+.loading-indicator-backgound .loading-points {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
   background-color: #13b497;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  margin: 0 0.25rem;
-  animation-duration: 1s;
-  animation-name: loading;
-  animation-iteration-count: infinite;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: loading-indicator-backgound 1.4s ease-in-out 0s infinite
+    both;
+  animation: loading-indicator-backgound 1.4s ease-in-out 0s infinite both;
 }
 
-.point-one{
+.loading-indicator-backgound {
+  background-color: #2f363ea5;
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  z-index: 1;
+}
+
+.loading-indicator-backgound .point-one {
+  -webkit-animation-delay: 0;
   animation-delay: 0;
 }
-.point-two{
+.loading-indicator-backgound .point-two {
+  -webkit-animation-delay: 200ms;
   animation-delay: 200ms;
 }
-.point-three{
+.loading-indicator-backgound .point-three {
+  -webkit-animation-delay: 400ms;
   animation-delay: 400ms;
 }
 
+@-webkit-keyframes loading-indicator-backgound {
+  0%,
+  80%,
+  to {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
 
-@keyframes loading {
-  0% {
-    scale: 1;
+@keyframes loading-indicator-backgound {
+  0%,
+  80%,
+  to {
+    -webkit-transform: scale(0);
+    transform: scale(0);
   }
-  50% {
-    scale: 1.75;
-  }
-  100% {
-    scale: 1;
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }
