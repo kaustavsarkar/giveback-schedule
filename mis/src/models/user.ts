@@ -1,21 +1,23 @@
 import {IdTokenResult, OAuthCredential, User as FUser} from 'firebase/auth';
 import {Builder} from 'shared/builder';
+import {Schedule} from './schedule';
 
 // TODO (kaustavsarkar): Make it immutable.
 export interface User {
   readonly name: string;
   readonly email: string;
-  readonly hasLoggedIn: boolean;
-  readonly photoUrl: string;
-  readonly linkedInProfile: string;
-  readonly isSavedInFirebase: boolean;
-  readonly designation: string;
-  readonly skills: Array<string>;
-  readonly yearsOfExperience: number;
-  readonly organisation: string;
-  readonly aboutMe: string;
-  readonly isInterviewer: boolean;
-  readonly isAdmin: boolean;
+  readonly hasLoggedIn?: boolean;
+  readonly photoUrl?: string;
+  readonly linkedInProfile?: string;
+  readonly isSavedInFirebase?: boolean;
+  readonly designation?: string;
+  readonly skills?: Array<string>;
+  readonly yearsOfExperience?: number;
+  readonly organisation?: string;
+  readonly aboutMe?: string;
+  readonly isInterviewer?: boolean;
+  readonly isAdmin?: boolean;
+  readonly schedules?: Array<Schedule>;
 }
 
 export const UserBuilder = {} as Builder<User>;
