@@ -3,11 +3,10 @@ import React, {useState} from 'react';
 import {useAppSelector} from 'state/hooks';
 import {RootState} from 'state/store';
 import SelectOptions from './select-options';
-import {DateRangePicker, Progress} from 'rsuite';
+import {DateRangePicker, Modal, Progress} from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import {DateRange} from 'rsuite/esm/DateRangePicker';
 import CreateButton from 'shared/create-button/create-buton';
-
 type Time = [number, number] | null;
 
 export default function CreateSchedule(): JSX.Element {
@@ -20,6 +19,7 @@ export default function CreateSchedule(): JSX.Element {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Time>(null);
   const [endTime, setEndTime] = useState<Time>(null);
+  const [showModal, setModal] = useState(false);
 
   const allSkills = useAppSelector(
     (state: RootState) => state.skills,
@@ -171,7 +171,7 @@ export default function CreateSchedule(): JSX.Element {
               </div>{' '}
               <div className="card-body">
                 <DateRangePicker
-                  format="HH:mm:ss"
+                  format="HH:mm"
                   ranges={[]}
                   onChange={handleTimeSelect}
                 />
@@ -182,7 +182,7 @@ export default function CreateSchedule(): JSX.Element {
       </div>
       {progress == 100 ? (
         <div className="create-btn">
-          <CreateButton />
+          <CreateButton onClick={() => setModal(true)} />
         </div>
       ) : (
         <div className="col sched-progress">
@@ -192,6 +192,31 @@ export default function CreateSchedule(): JSX.Element {
           ></Progress.Circle>
         </div>
       )}
+      <Modal open={showModal} onClose={() => setModal(false)}>
+        <Modal.Header>
+          <Modal.Title>Verify Schedule</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <strong>For Skills</strong> &nbsp; {Array.from(skills).join(', ')}
+          </div>
+          <div>
+            <strong>Interviews shall be scheduled on</strong> &nbsp;{' '}
+            {Array.from(days).join(', ')}
+          </div>
+          <div>
+            <strong>
+              {startDate?.toDateString() +
+                ` through ` +
+                endDate?.toDateString()}
+            </strong>
+          </div>
+          <div>
+            Between preferred time of <strong>{startTime?.join(':')}</strong>{' '}
+            and <strong>{endTime?.join(':')}</strong>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
