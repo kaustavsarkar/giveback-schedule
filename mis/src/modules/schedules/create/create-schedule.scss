@@ -14,6 +14,14 @@
     color: #fff;
   }
 
+  & .create-btn {
+    height: 100px;
+    width: 150px;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+  }
+
   & .sched-progress {
     max-width: 100%;
     height: 100px;

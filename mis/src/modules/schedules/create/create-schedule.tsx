@@ -6,6 +6,7 @@ import SelectOptions from './select-options';
 import {DateRangePicker, Progress} from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import {DateRange} from 'rsuite/esm/DateRangePicker';
+import CreateButton from 'shared/create-button/create-buton';
 
 type Time = [number, number] | null;
 
@@ -179,12 +180,18 @@ export default function CreateSchedule(): JSX.Element {
           </div>
         </div>
       </div>
-      <div className="col sched-progress">
-        <Progress.Circle
-          percent={progress}
-          strokeColor="#34c3ff"
-        ></Progress.Circle>
-      </div>
+      {progress == 100 ? (
+        <div className="create-btn">
+          <CreateButton />
+        </div>
+      ) : (
+        <div className="col sched-progress">
+          <Progress.Circle
+            percent={progress}
+            strokeColor="#34c3ff"
+          ></Progress.Circle>
+        </div>
+      )}
     </div>
   );
 }
