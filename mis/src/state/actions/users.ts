@@ -1,5 +1,6 @@
-import {doc, updateDoc} from 'firebase/firestore';
+import {arrayUnion, doc, updateDoc} from 'firebase/firestore';
 import {fsDatabase} from 'gfirebase/firebase';
+import {Schedule} from 'models/schedule';
 import {User, UserProfile} from 'models/user';
 import {UserCollection} from 'state/firebase/schema';
 import {updateUser} from 'state/reducers/user';
@@ -108,5 +109,46 @@ export const updatePersonalInfo =
     });
     localStorage.setItem(user.email, JSON.stringify(updatedUserProfile.user));
     dispatch(updateUser(updatedUserProfile));
+    return updatedUserProfile;
+  };
+
+export const updateSchedules =
+  (schedules: Array<Schedule>): UserThunk =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    const userProfile = getState().userProfile;
+    if (schedules == null || schedules.length <= 0) {
+      console.log('Returning since there are no schedules to be added');
+      return userProfile;
+    }
+
+    const user = userProfile.user as User;
+    const updatedUserProfile = <UserProfile>{
+      ...userProfile,
+      user: <User>{
+        ...user,
+        schedules: schedules.concat(user.schedules ?? new Array<Schedule>()),
+      },
+    };
+
+    console.log(userProfile.user);
+
+    console.log(
+      JSON.stringify(userProfile.user, (key, value) => {
+        if (key == 'schedules') {
+          value = JSON.stringify(value);
+        }
+        console.log(typeof key, value);
+        return value;
+      }),
+    );
+
+    const userRef = doc(fsDatabase, UserCollection.name, user.email);
+    await updateDoc(userRef, {
+      schedules: arrayUnion(...schedules),
+    });
+
+    localStorage.setItem(user.email, JSON.stringify(updatedUserProfile.user));
+    dispatch(updateUser(updatedUserProfile));
+
     return updatedUserProfile;
   };

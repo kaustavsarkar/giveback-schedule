@@ -1,13 +1,28 @@
 import './create-schedule.scss';
 import React, {useState} from 'react';
-import {useAppSelector} from 'state/hooks';
+import {useAppDispatch, useAppSelector} from 'state/hooks';
 import {RootState} from 'state/store';
 import SelectOptions from './select-options';
-import {DateRangePicker, Modal, Progress} from 'rsuite';
+import {Button, DateRangePicker, Modal, Progress} from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import {DateRange} from 'rsuite/esm/DateRangePicker';
 import CreateButton from 'shared/create-button/create-buton';
+import {Schedule} from 'models/schedule';
+import {Skills} from 'models/skills';
+import {User, UserProfile} from 'models/user';
+import {updateSchedules} from 'state/actions/users';
+import {useNavigate} from 'react-router-dom';
 type Time = [number, number] | null;
+
+const week: {[key: number]: string} = {
+  0: 'Sunday',
+  1: 'Monday',
+  2: 'Tuesday',
+  3: 'Webnesday',
+  4: 'Thursday',
+  5: 'Friday',
+  6: 'Saturday',
+};
 
 export default function CreateSchedule(): JSX.Element {
   // Progress for each section shall be considered as 25% since we have only
@@ -20,10 +35,16 @@ export default function CreateSchedule(): JSX.Element {
   const [startTime, setStartTime] = useState<Time>(null);
   const [endTime, setEndTime] = useState<Time>(null);
   const [showModal, setModal] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const allSkills = useAppSelector(
     (state: RootState) => state.skills,
   ) as Array<string>;
+  const userProfile = useAppSelector(
+    (state: RootState) => state.userProfile,
+  ) as UserProfile;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSkillUpdate: React.ChangeEventHandler<HTMLInputElement> = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -69,8 +90,10 @@ export default function CreateSchedule(): JSX.Element {
       if (progress < 100 && (startDate == null || endDate == null)) {
         setProgress(progress + 25);
       }
-      setStartDate(value[0]);
-      setEndDate(value[1]);
+      const sDate = getDateWithoutTime(value[0]);
+      const eDate = getDateWithoutTime(value[1]);
+      setStartDate(sDate);
+      setEndDate(eDate);
     } else {
       setStartDate(null);
       setEndDate(null);
@@ -79,6 +102,14 @@ export default function CreateSchedule(): JSX.Element {
         setProgress(progress - 25);
       }
     }
+  };
+
+  const getDateWithoutTime = (date: Date): Date => {
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    return date;
   };
 
   const handleTimeSelect = (value: DateRange | null) => {
@@ -102,6 +133,79 @@ export default function CreateSchedule(): JSX.Element {
   const today = new Date();
   const threeMonthsFromNow = new Date();
   threeMonthsFromNow.setDate(today.getDate() + 90);
+
+  const uploadSchedules = () => {
+    setLoading(true);
+    if (
+      endDate == null ||
+      startDate == null ||
+      startTime == null ||
+      endTime == null
+    ) {
+      return;
+    }
+    console.log(startDate, endDate);
+    const date = new Date(startDate);
+    const dateSchedules = new Map<Date, Array<Schedule>>();
+    const allSchedules = Array<Schedule>();
+
+    // Generate Skills.
+    const selectedSkills: Skills = {
+      skills: Array.from(skills),
+    };
+
+    // Generate all dates
+    while (endDate >= date) {
+      console.log(date);
+      // Check if the selected date has the selected day as well.
+      const day = date.getDay() as number;
+      if (days.has(week[day])) {
+        // Generate Start Time.
+        const sTime = new Date(date);
+        sTime.setHours(startTime[0]);
+        sTime.setMinutes(startTime[1]);
+
+        // Generate end time.
+        const eTime = new Date(date);
+        eTime.setHours(endTime[0]);
+        eTime.setMinutes(endTime[1]);
+
+        // Set details of the interviewer.
+        const interviewer: User = {
+          email: userProfile.user.email,
+          name: userProfile.user.name,
+          photoUrl: userProfile.user.photoUrl,
+        };
+
+        // Set scheduling details.
+        const schedule: Schedule = {
+          interviewer: interviewer,
+          date: new Date(date).toDateString(),
+          startTime: sTime.toUTCString(),
+          endTime: eTime.toUTCString(),
+          skills: selectedSkills,
+        };
+        allSchedules.push(schedule);
+
+        if (!dateSchedules.has(date)) {
+          dateSchedules.set(new Date(date), new Array<Schedule>());
+        }
+        dateSchedules.get(date)?.push(schedule);
+      }
+      date?.setDate(date.getDate() + 1);
+    }
+
+    console.log(allSchedules, dateSchedules);
+
+    // Dispatch an action to update the schedules for a user.
+    allSchedules.length > 0 &&
+      dispatch(updateSchedules(allSchedules))
+        .then(() => {
+          setModal(false);
+          navigate('/schedules');
+        })
+        .finally(() => setLoading(false));
+  };
 
   return (
     <div className="create-sch row">
@@ -129,15 +233,7 @@ export default function CreateSchedule(): JSX.Element {
               </div>{' '}
               <div className="card-body">
                 <SelectOptions
-                  options={[
-                    'Monday',
-                    'Tuesday',
-                    'Webnesday',
-                    'Thursday',
-                    'Friday',
-                    'Saturday',
-                    'Sunday',
-                  ]}
+                  options={Object.values(week)}
                   onChange={onDaysUpdate}
                 ></SelectOptions>
               </div>
@@ -216,6 +312,25 @@ export default function CreateSchedule(): JSX.Element {
             and <strong>{endTime?.join(':')}</strong>
           </div>
         </Modal.Body>
+        <Modal.Footer>
+          <Button
+            appearance="ghost"
+            color="orange"
+            active
+            onClick={() => setModal(false)}
+          >
+            Edit
+          </Button>
+          <Button
+            appearance="primary"
+            color="orange"
+            active
+            onClick={uploadSchedules}
+            loading={isLoading}
+          >
+            Upload Schedules
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );
