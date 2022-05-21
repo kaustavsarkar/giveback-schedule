@@ -1,4 +1,4 @@
-import {arrayUnion, doc, updateDoc} from 'firebase/firestore';
+import {arrayUnion, doc, increment, updateDoc} from 'firebase/firestore';
 import {fsDatabase} from 'gfirebase/firebase';
 import {Schedule} from 'models/schedule';
 import {User, UserProfile} from 'models/user';
@@ -121,12 +121,15 @@ export const updateSchedules =
       return userProfile;
     }
 
+    const totalSchedules = schedules.length;
+
     const user = userProfile.user as User;
     const updatedUserProfile = <UserProfile>{
       ...userProfile,
       user: <User>{
         ...user,
         schedules: schedules.concat(user.schedules ?? new Array<Schedule>()),
+        totalSchedules: (user.totalSchedules ?? 0) + totalSchedules,
       },
     };
 
@@ -145,9 +148,9 @@ export const updateSchedules =
     const userRef = doc(fsDatabase, UserCollection.name, user.email);
     await updateDoc(userRef, {
       schedules: arrayUnion(...schedules),
-    });
-
-    localStorage.setItem(user.email, JSON.stringify(updatedUserProfile.user));
+      totalSchedules: increment(totalSchedules),
+    }),
+      localStorage.setItem(user.email, JSON.stringify(updatedUserProfile.user));
     dispatch(updateUser(updatedUserProfile));
 
     return updatedUserProfile;

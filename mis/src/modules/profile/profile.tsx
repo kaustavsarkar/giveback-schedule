@@ -29,6 +29,7 @@ export default function ProfilePage(): JSX.Element {
   const aboutMe = user.aboutMe as string;
   const organisation = user.organisation as string;
   const yoe = user.yearsOfExperience as number;
+  const totalSchedules = user.totalSchedules;
   return (
     <>
       {' '}
@@ -59,7 +60,7 @@ export default function ProfilePage(): JSX.Element {
         <div className="col-xl-4">
           <div className="row">
             <div className="col-lg-12">
-              <ScheduleAgg totalScheduled={10} />
+              <ScheduleAgg totalScheduled={totalSchedules} />
             </div>{' '}
           </div>{' '}
         </div>{' '}

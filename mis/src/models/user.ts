@@ -18,6 +18,7 @@ export interface User {
   readonly isInterviewer?: boolean;
   readonly isAdmin?: boolean;
   readonly schedules?: Array<Schedule>;
+  readonly totalSchedules?: number;
 }
 
 export const UserBuilder = {} as Builder<User>;
