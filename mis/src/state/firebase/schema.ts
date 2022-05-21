@@ -52,6 +52,8 @@ export class UserConverter implements FirestoreDataConverter<User> {
       aboutMe: data?.aboutMe,
       isInterviewer: data?.isInterviewer,
       isAdmin: data?.isAdmin,
+      schedules: data?.schedules,
+      totalSchedules: data?.totalSchedules,
     };
   }
 }
