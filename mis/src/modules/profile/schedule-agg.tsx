@@ -8,9 +8,9 @@ interface Props_ {
 }
 
 export default function ScheduleAgg({
-  totalScheduled,
-  completed,
-  upcoming,
+  totalScheduled = 0,
+  completed = 0,
+  upcoming = 0,
 }: Props_): JSX.Element {
   return (
     <div className="card">

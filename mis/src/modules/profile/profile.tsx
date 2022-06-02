@@ -30,6 +30,9 @@ export default function ProfilePage(): JSX.Element {
   const organisation = user.organisation as string;
   const yoe = user.yearsOfExperience as number;
   const totalSchedules = user.totalSchedules;
+  const futureSchedules = user.schedules?.filter(
+    (sch) => new Date(sch.startTime).getTime() >= new Date().getTime(),
+  ).length;
   return (
     <>
       {' '}
@@ -60,7 +63,10 @@ export default function ProfilePage(): JSX.Element {
         <div className="col-xl-4">
           <div className="row">
             <div className="col-lg-12">
-              <ScheduleAgg totalScheduled={totalSchedules} />
+              <ScheduleAgg
+                totalScheduled={totalSchedules}
+                upcoming={futureSchedules}
+              />
             </div>{' '}
           </div>{' '}
         </div>{' '}
