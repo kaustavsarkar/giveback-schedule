@@ -14,7 +14,7 @@ export default function ProfileCard(props: {user: User}): JSX.Element {
           <div className="card-header align-items-start">
             <div className="profile-photo">
               <img
-                src={'user.photoUrl'}
+                src={user.photoUrl}
                 className="img-fluid rounded-circle"
                 onError={({currentTarget}) => {
                   console.log('failed to load image');
