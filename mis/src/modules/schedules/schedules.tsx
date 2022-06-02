@@ -2,7 +2,7 @@ import './schedules.scss';
 import {Schedule} from 'models/schedule';
 import {User} from 'models/user';
 import React from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import CreateButton from 'shared/create-button/create-buton';
 import {useAppSelector} from 'state/hooks';
 import {RootState} from 'state/store';
