@@ -1,0 +1,22 @@
+.profile-card {
+  .profile-photo {
+    max-width: 100px;
+  }
+
+  .list-group-item {
+    background-color: inherit;
+  }
+
+  .heading {
+    text-align: center;
+    color: #fff;
+  }
+
+  .card {
+    box-shadow: 0px 5px 10px #b2b2b2;
+  }
+
+  .card-header {
+    align-self: center;
+  }
+}
