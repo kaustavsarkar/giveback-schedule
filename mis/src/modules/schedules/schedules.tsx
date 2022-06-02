@@ -50,7 +50,6 @@ const Schedule_ = (props: {schedule: Schedule}): JSX.Element => {
 
 export default function Schedules(): JSX.Element {
   const navigate = useNavigate();
-  const location = useLocation();
   const user = useAppSelector(
     (state: RootState) => state.userProfile.user,
   ) as User;
