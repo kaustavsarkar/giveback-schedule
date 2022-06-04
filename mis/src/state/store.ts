@@ -25,3 +25,10 @@ export type SkillThunk = ThunkAction<
   unknown,
   AnyAction
 >;
+
+export type InterviewersThunk = ThunkAction<
+  Promise<Array<string>>,
+  RootState,
+  unknown,
+  AnyAction
+>;
