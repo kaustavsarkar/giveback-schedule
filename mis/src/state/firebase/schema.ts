@@ -21,6 +21,11 @@ export class SkillsCollection implements Collection {
   static key = 'skills';
 }
 
+export class InterviewersCollection implements Collection {
+  name = 'Interviewers';
+  static key = 'interviewers';
+}
+
 // Helps in conversion from {DocumentData} to {User} and vice versa.
 //
 // To be used while performing I/O with firestore.
