@@ -1,3 +1,26 @@
 .interviewers {
   justify-content: center;
 }
+
+.interivewers-heading {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-bottom: 10px;
+
+  &:after {
+    background: #fff;
+    height: 2px;
+    flex: 1;
+    content: '';
+  }
+
+  &:before {
+    background: none;
+  }
+
+  & span {
+    color: #fff;
+    margin: 0 15px;
+  }
+}

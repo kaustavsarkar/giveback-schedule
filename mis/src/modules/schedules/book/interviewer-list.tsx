@@ -17,6 +17,12 @@ export default function InterviewerList(props: {
       <ProfileCard email={interviewer} key={interviewer} />
     ));
 
-  console.log(interviewerCards);
-  return <div className="row interviewers">{interviewerCards}</div>;
+  return (
+    <div>
+      <h4 className="interivewers-heading">
+        <span>Select your interviewer</span>
+      </h4>
+      <div className="row interviewers">{interviewerCards}</div>
+    </div>
+  );
 }
