@@ -7,6 +7,7 @@ import {PrivateRoute} from 'private_route';
 import ProfilePage from 'modules/profile/profile';
 import Schedules from 'modules/schedules/schedules';
 import CreateSchedule from 'modules/schedules/create/create-schedule';
+import BookSchedule from 'modules/schedules/book/book-schedule';
 
 /**
  *
@@ -22,6 +23,7 @@ function App(): JSX.Element {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/schedules" element={<Schedules />}></Route>
           <Route path="/schedules/create" element={<CreateSchedule />}></Route>
+          <Route path="/schedules/book" element={<BookSchedule />}></Route>
         </Route>
       </Routes>
     </Router>
