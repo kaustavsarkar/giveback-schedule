@@ -1,7 +1,7 @@
 import {CaseReducer, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import {createSlice} from '@reduxjs/toolkit';
 import {User, UserProfile} from 'models/user';
-import {userSignIn} from 'state/actions/signin';
+import {userSignIn} from 'state/actions/users';
 
 const initialState = (function () {
   const email = localStorage.getItem('email');
