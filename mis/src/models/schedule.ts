@@ -11,7 +11,10 @@ export interface Schedule {
   readonly interviewer: User;
   readonly interviewee?: User;
   readonly skills: Skills;
+  readonly status?: Status;
 }
+
+type Status = 'AVAILABLE | DONE';
 
 export interface DateSchedule {
   readonly schedules: Array<Schedule>;
