@@ -1,5 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {UserProfile} from 'models/user';
+import {User, UserProfile} from 'models/user';
 import rootReducer from './reducers';
 import {ThunkAction} from 'redux-thunk';
 import {AnyAction} from 'redux';
@@ -28,6 +28,13 @@ export type SkillThunk = ThunkAction<
 
 export type InterviewersThunk = ThunkAction<
   Promise<Array<string>>,
+  RootState,
+  unknown,
+  AnyAction
+>;
+
+export type InterviewerSchedulesThunk = ThunkAction<
+  Promise<Array<User>>,
   RootState,
   unknown,
   AnyAction

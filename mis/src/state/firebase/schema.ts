@@ -27,6 +27,40 @@ export class InterviewersCollection implements Collection {
   static key = 'interviewers';
 }
 
+export class InterviewerSchedulesConverter
+  implements FirestoreDataConverter<User>
+{
+  toFirestore(user: WithFieldValue<User>): DocumentData {
+    return {
+      name: user.name,
+      email: user.email,
+      photoUrl: user.photoUrl,
+      linkedInProfile: user.linkedInProfile,
+    };
+  }
+
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot<DocumentData>,
+    options?: SnapshotOptions,
+  ): User {
+    const data = snapshot.data(options);
+    return <User>{
+      email: data.email,
+      name: data.name,
+      linkedInProfile: data.linkedInProfile,
+      photoUrl: data?.photoUrl,
+      designation: data?.designation,
+      skills: data?.skills,
+      yearsOfExperience: data?.yoe,
+      organisation: data?.organisation,
+      aboutMe: data?.aboutMe,
+      isInterviewer: data?.isInterviewer,
+      schedules: data?.schedules,
+      totalSchedules: data?.totalSchedules,
+    };
+  }
+}
+
 // Helps in conversion from {DocumentData} to {User} and vice versa.
 //
 // To be used while performing I/O with firestore.

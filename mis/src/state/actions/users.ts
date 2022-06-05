@@ -4,6 +4,7 @@ import {
   DocumentData,
   DocumentReference,
   DocumentSnapshot,
+  FirestoreDataConverter,
   getDoc,
   increment,
   setDoc,
@@ -13,9 +14,19 @@ import {fsDatabase} from 'gfirebase/firebase';
 import {Schedule} from 'models/schedule';
 import {User, UserProfile} from 'models/user';
 import {googleSignIn} from 'modules/auth/google_auth';
-import {UserCollection, UserConverter} from 'state/firebase/schema';
+import {
+  InterviewerSchedulesConverter,
+  UserCollection,
+  UserConverter,
+} from 'state/firebase/schema';
+import {fetchInterviewerSchedules} from 'state/reducers/interviewer-schedules';
 import {updateUser} from 'state/reducers/user';
-import {AppDispatch, RootState, UserThunk} from 'state/store';
+import {
+  AppDispatch,
+  InterviewerSchedulesThunk,
+  RootState,
+  UserThunk,
+} from 'state/store';
 
 export const userSignIn = async () => {
   const userProfile = (await googleSignIn()) as UserProfile;
@@ -72,9 +83,12 @@ async function saveInFirebase_(userProfile: UserProfile): Promise<void> {
   });
 }
 
-async function userDataFirebase_(email: string): Promise<User | null> {
+async function userDataFirebase_(
+  email: string,
+  converter?: FirestoreDataConverter<User>,
+): Promise<User | null> {
   const userDocRef = doc(fsDatabase, UserCollection.name, email).withConverter(
-    new UserConverter(),
+    converter ?? new UserConverter(),
   ) as DocumentReference<DocumentData>;
 
   const userData = (await getDoc(userDocRef)) as DocumentSnapshot<User>;
@@ -237,4 +251,52 @@ export const updateSchedules =
     dispatch(updateUser(updatedUserProfile));
 
     return updatedUserProfile;
+  };
+
+export const getInterviewerSchedule =
+  (email: string, forceFetch = false): InterviewerSchedulesThunk =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    let schedules = getState().interviewersSchedules;
+    const me = getState().userProfile.user;
+
+    console.log('fetching schedules for ', email);
+
+    // User can be an interviewer as well. We would not want to save them as their own interviewer.
+    if (me.email === email) {
+      console.log('User is also an interviewer');
+      return schedules;
+    }
+
+    if (!forceFetch && schedules.length < 1) {
+      // If there are no schedules in the state check local storage.
+      // If it is force fetch make sure it is skipped.
+      const interviewerData = localStorage.getItem(email);
+      const interviewer: User = interviewerData && JSON.parse(interviewerData);
+      schedules = [...schedules, interviewer];
+      console.log(schedules);
+      dispatch(fetchInterviewerSchedules(schedules));
+      return schedules;
+    }
+
+    // Could not find data either in state or in local storage. Fetching from firebase.
+    const interviewer = await userDataFirebase_(
+      email,
+      new InterviewerSchedulesConverter(),
+    );
+
+    console.log('got schedule from firebase', interviewer);
+
+    if (interviewer == null) {
+      return schedules;
+    }
+
+    schedules = [...schedules, interviewer];
+
+    console.log(schedules);
+
+    localStorage.setItem(interviewer.email, JSON.stringify(interviewer));
+
+    dispatch(fetchInterviewerSchedules(schedules));
+
+    return schedules;
   };
