@@ -5,6 +5,7 @@ import {
   SnapshotOptions,
   WithFieldValue,
 } from 'firebase/firestore';
+import {Interviewers} from 'models/interviewers';
 import {Skills} from 'models/skills';
 import {User} from 'models/user';
 
@@ -77,6 +78,26 @@ export class SkillsConverter implements FirestoreDataConverter<Skills> {
     const data = snapshot.data(options);
     return <Skills>{
       skills: data.skills,
+    };
+  }
+}
+
+export class InterviewersConverter
+  implements FirestoreDataConverter<Interviewers>
+{
+  toFirestore(interviewers: WithFieldValue<Interviewers>): DocumentData {
+    return {
+      interviewers: interviewers.interviewers,
+    };
+  }
+
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot<DocumentData>,
+    options?: SnapshotOptions,
+  ): Interviewers {
+    const data = snapshot.data(options);
+    return <Interviewers>{
+      interviewers: data.interviewers,
     };
   }
 }
