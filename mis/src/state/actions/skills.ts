@@ -22,7 +22,7 @@ export const getAllSkills =
       'existing skills',
       initialSkills,
     );
-    if (initialSkills.length > 0) {
+    if (!forceReload && initialSkills.length > 0) {
       return getState().skills;
     }
 
