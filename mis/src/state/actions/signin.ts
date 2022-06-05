@@ -9,7 +9,7 @@ import {
 import {User, UserProfile} from 'models/user';
 import {fsDatabase} from 'gfirebase/firebase';
 import {UserCollection, UserConverter} from 'state/firebase/schema';
-import {googleSignIn} from './google_auth';
+import {googleSignIn} from '../../modules/auth/google_auth';
 
 export const userSignIn = async () => {
   const userProfile = (await googleSignIn()) as UserProfile;
