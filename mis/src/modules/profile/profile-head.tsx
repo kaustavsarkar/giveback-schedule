@@ -27,6 +27,10 @@ export default function ProfileHead({
                 <img
                   src={profilePhoto}
                   className="img-fluid rounded-circle"
+                  onError={({currentTarget}) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = 'profile_pic_ph.png';
+                  }}
                   alt="profile"
                 />
               </div>{' '}
