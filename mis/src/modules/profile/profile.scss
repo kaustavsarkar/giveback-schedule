@@ -1,3 +1,13 @@
-.text-muted {
-  color: #b7b7b7 !important;
+.user-profie {
+  & .text-muted {
+    color: #b7b7b7 !important;
+  }
+
+  & .schedule {
+    cursor: pointer;
+
+    & .list-group-item {
+      background-color: inherit;
+    }
+  }
 }

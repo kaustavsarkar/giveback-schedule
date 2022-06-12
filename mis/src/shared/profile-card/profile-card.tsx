@@ -18,7 +18,7 @@ export default function ProfileCard(props: {email: string}): JSX.Element {
   }, []);
 
   const showSchedules = () => {
-    navigate(`/profile/${user?.email}`);
+    navigate(`/profile/${user?.email}/book`);
   };
 
   const futureSchedules = user?.schedules?.filter(

@@ -11,6 +11,7 @@ import PersonalInfo from './personal-info';
 import {useLocation, useParams} from 'react-router-dom';
 import {getUserData} from 'services/user-service';
 import LoadingIndicator from 'shared/loading-indicator/loading-indicator';
+import {ScheduleCard} from 'modules/schedules/schedule-card';
 
 function ProfileInfo_(props: {
   profileUser: User;
@@ -63,9 +64,13 @@ export default function ProfilePage(): JSX.Element {
     }
   }, [emailParam]);
 
-  console.log(location, params.email, profileUser);
+  const showBookables = location.pathname.split('/')[3] === 'book';
 
-  console.log('profile page got the following userProfile: ', profileUser);
+  console.log(
+    'profile page got the following userProfile: ',
+    profileUser,
+    showBookables,
+  );
 
   const allSkills = useAppSelector(
     (state: RootState) => state.skills,
@@ -78,11 +83,17 @@ export default function ProfilePage(): JSX.Element {
   const totalSchedules = profileUser?.totalSchedules;
   const futureSchedules = profileUser?.schedules?.filter(
     (sch) => new Date(sch.startTime).getTime() >= new Date().getTime(),
-  ).length;
+  );
+  const futureSchedulesComponents = futureSchedules?.map((sch) => (
+    <ScheduleCard key={sch.startTime} schedule={sch} />
+  ));
+  const futureScheduleCount = futureSchedules?.length;
+
+  console.log(futureSchedules);
   return (
     <>
       {profileUser ? (
-        <div>
+        <div className="user-profie">
           <ProfileHead
             profilePhoto={profilePhoto}
             name={name}
@@ -93,11 +104,22 @@ export default function ProfilePage(): JSX.Element {
             <div className="col-xl-8">
               <div className="card">
                 <div className="card-body">
-                  <ProfileInfo_
-                    profileUser={profileUser}
-                    canEdit={canEdit}
-                    allSkills={allSkills}
-                  />
+                  {showBookables ? (
+                    <div>
+                      <h4 className="schedules-heading">
+                        <span>Upcoming Interviews</span>
+                      </h4>
+                      <div className="row schedule">
+                        {futureSchedulesComponents}
+                      </div>
+                    </div>
+                  ) : (
+                    <ProfileInfo_
+                      profileUser={profileUser}
+                      canEdit={canEdit}
+                      allSkills={allSkills}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -106,7 +128,7 @@ export default function ProfilePage(): JSX.Element {
                 <div className="col-lg-12">
                   <ScheduleAgg
                     totalScheduled={totalSchedules}
-                    upcoming={futureSchedules}
+                    upcoming={futureScheduleCount}
                   />
                 </div>
               </div>
