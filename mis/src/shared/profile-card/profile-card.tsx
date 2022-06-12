@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from 'state/hooks';
 import {getInterviewerSchedule} from 'state/actions/users';
 import {RootState} from 'state/store';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 export default function ProfileCard(props: {email: string}): JSX.Element {
   const email = props.email;
@@ -11,7 +11,6 @@ export default function ProfileCard(props: {email: string}): JSX.Element {
   const user = useAppSelector((state: RootState) =>
     state.interviewersSchedules.find((schedule) => schedule.email === email),
   );
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,8 +18,7 @@ export default function ProfileCard(props: {email: string}): JSX.Element {
   }, []);
 
   const showSchedules = () => {
-    const currentPath = location.pathname;
-    navigate(`${currentPath}/${user?.email}`);
+    navigate(`/profile/${user?.email}`);
   };
 
   const futureSchedules = user?.schedules?.filter(
