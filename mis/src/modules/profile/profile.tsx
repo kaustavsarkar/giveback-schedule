@@ -1,5 +1,5 @@
 import './profile.scss';
-import {User, UserProfile} from 'models/user';
+import {User} from 'models/user';
 import React, {useEffect, useState} from 'react';
 import {useAppSelector} from 'state/hooks';
 import {RootState} from 'state/store';
@@ -12,9 +12,38 @@ import {useLocation, useParams} from 'react-router-dom';
 import {getUserData} from 'services/user-service';
 import LoadingIndicator from 'shared/loading-indicator/loading-indicator';
 
-// function Profile(props: {profileUser: User}): JSX.Element {
+function ProfileInfo_(props: {
+  profileUser: User;
+  allSkills: Array<string>;
+  canEdit: boolean;
+}): JSX.Element {
+  const skills = props.profileUser?.skills as Array<string>;
+  const aboutMe = props.profileUser?.aboutMe as string;
+  const organisation = props.profileUser?.organisation as string;
+  const yoe = props.profileUser?.yearsOfExperience as number;
+  const name = props.profileUser?.name;
+  const email = props.profileUser?.email;
+  const designation = props.profileUser?.designation;
 
-// }
+  return (
+    <div id="about-me" className="tab-pane aboutMe">
+      <AboutMe aboutMe={aboutMe} canEdit={props.canEdit} />
+      <Skills
+        existingSkills={skills}
+        allSkills={props.allSkills}
+        canEdit={props.canEdit}
+      />
+      <PersonalInfo
+        name={name}
+        email={email}
+        designation={designation}
+        organisation={organisation}
+        yoe={yoe}
+        canEdit={props.canEdit}
+      />
+    </div>
+  );
+}
 
 export default function ProfilePage(): JSX.Element {
   const [profileUser, setProfileUser] = useState<User>();
@@ -46,10 +75,6 @@ export default function ProfilePage(): JSX.Element {
   const name = profileUser?.name as string;
   const email = profileUser?.email as string;
   const designation = profileUser?.designation as string;
-  const skills = profileUser?.skills as Array<string>;
-  const aboutMe = profileUser?.aboutMe as string;
-  const organisation = profileUser?.organisation as string;
-  const yoe = profileUser?.yearsOfExperience as number;
   const totalSchedules = profileUser?.totalSchedules;
   const futureSchedules = profileUser?.schedules?.filter(
     (sch) => new Date(sch.startTime).getTime() >= new Date().getTime(),
@@ -68,22 +93,11 @@ export default function ProfilePage(): JSX.Element {
             <div className="col-xl-8">
               <div className="card">
                 <div className="card-body">
-                  <div id="about-me" className="tab-pane aboutMe">
-                    <AboutMe aboutMe={aboutMe} canEdit={canEdit} />
-                    <Skills
-                      existingSkills={skills}
-                      allSkills={allSkills}
-                      canEdit={canEdit}
-                    />
-                    <PersonalInfo
-                      name={name}
-                      email={email}
-                      designation={designation}
-                      organisation={organisation}
-                      yoe={yoe}
-                      canEdit={canEdit}
-                    />
-                  </div>
+                  <ProfileInfo_
+                    profileUser={profileUser}
+                    canEdit={canEdit}
+                    allSkills={allSkills}
+                  />
                 </div>
               </div>
             </div>
