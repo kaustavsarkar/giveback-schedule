@@ -5,9 +5,12 @@ import SaveButton from 'shared/save-button/save-button';
 import {useAppDispatch} from 'state/hooks';
 import {updateAboutMe} from 'state/actions/users';
 
-export default function AboutMe(props: {aboutMe: string}): JSX.Element {
+export default function AboutMe(props: {
+  aboutMe: string;
+  canEdit?: boolean;
+}): JSX.Element {
   const [isEdit, setEdit] = useState(false);
-  const [aboutMeText, setAboutMeText] = useState('');
+  const [aboutMeText, setAboutMeText] = useState(props.aboutMe);
 
   const dispatch = useAppDispatch();
 
@@ -36,11 +39,12 @@ export default function AboutMe(props: {aboutMe: string}): JSX.Element {
           <h4 className="text-primary">
             {' '}
             About Me{' '}
-            {isEdit ? (
-              <SaveButton onClick={onSave} />
-            ) : (
-              <EditButton onClick={onEdit} />
-            )}{' '}
+            {(props.canEdit ?? false) &&
+              (isEdit ? (
+                <SaveButton onClick={onSave} />
+              ) : (
+                <EditButton onClick={onEdit} />
+              ))}{' '}
           </h4>{' '}
           {isEdit ? (
             <textarea
@@ -52,7 +56,7 @@ export default function AboutMe(props: {aboutMe: string}): JSX.Element {
               {' '}
             </textarea>
           ) : (
-            <p className="mb-2">{props.aboutMe}</p>
+            <p className="mb-2">{aboutMeText}</p>
           )}
         </div>{' '}
       </div>{' '}

@@ -52,14 +52,15 @@ function EditSkills_(props: {
 export default function Skills(props: {
   existingSkills: Array<string>;
   allSkills: Array<string>;
+  canEdit?: boolean;
 }): JSX.Element {
   const [isEdit, setEdit] = useState(false);
   const [userSkills, setUserSkills] = useState(
-    props.existingSkills ?? Array<string>(),
+    props.existingSkills ?? new Array<string>(),
   );
   const allSkills = props.allSkills;
 
-  console.log('skills component', allSkills, userSkills);
+  console.log('skills component', allSkills, userSkills, props.existingSkills);
 
   const dispatch = useAppDispatch();
 
@@ -77,7 +78,7 @@ export default function Skills(props: {
   const skillComponents = isEdit ? (
     <></>
   ) : (
-    userSkills.map((skill, index) => <Skill_ value={skill} key={`${index}`} />)
+    userSkills?.map((skill, index) => <Skill_ value={skill} key={`${index}`} />)
   );
 
   const allSkillsOption = isEdit
@@ -93,11 +94,12 @@ export default function Skills(props: {
       <h4 className="text-primary mb-2">
         {' '}
         Skills
-        {isEdit ? (
-          <SaveButton onClick={onSave} />
-        ) : (
-          <EditButton onClick={onEdit} />
-        )}{' '}
+        {props.canEdit &&
+          (isEdit ? (
+            <SaveButton onClick={onSave} />
+          ) : (
+            <EditButton onClick={onEdit} />
+          ))}{' '}
       </h4>{' '}
       {isEdit ? (
         <EditSkills_

@@ -11,6 +11,7 @@ export default function PersonalInfo(props: {
   organisation?: string;
   designation?: string;
   yoe?: number;
+  canEdit?: boolean;
 }): JSX.Element {
   const [isEdit, setEdit] = useState(false);
   const [organisation, setOrganisation] = useState(props.organisation ?? '');
@@ -56,11 +57,12 @@ export default function PersonalInfo(props: {
     <div className="profile-personal-info">
       <h4 className="text-primary mb-4">
         Personal Information{' '}
-        {isEdit ? (
-          <SaveButton onClick={onSave} />
-        ) : (
-          <EditButton onClick={onEdit} />
-        )}
+        {props.canEdit &&
+          (isEdit ? (
+            <SaveButton onClick={onSave} />
+          ) : (
+            <EditButton onClick={onEdit} />
+          ))}
       </h4>{' '}
       <div className="row mb-2">
         <div className="col-4">
