@@ -21,7 +21,7 @@ export default function Login(): JSX.Element {
   useEffect(() => {
     console.log('is user saved in firebase', existingUser?.user?.hasLoggedIn);
     if (existingUser?.user?.hasLoggedIn) {
-      navigate('/profile', {replace: true});
+      navigate(`/profile/${existingUser.user?.email}`, {replace: true});
     }
     console.log('login component', existingUser);
   }, [existingUser]);

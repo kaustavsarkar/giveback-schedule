@@ -20,10 +20,11 @@ function App(): JSX.Element {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route element={<PrivateRoute redirectTo="/login" />}>
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:email" element={<ProfilePage />} />
           <Route path="/schedules" element={<Schedules />}></Route>
           <Route path="/schedules/create" element={<CreateSchedule />}></Route>
           <Route path="/schedules/book" element={<BookSchedule />}></Route>
+          <Route path="/profile/:email/book" element={<ProfilePage />}></Route>
         </Route>
       </Routes>
     </Router>
