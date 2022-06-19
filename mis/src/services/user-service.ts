@@ -26,7 +26,11 @@ export async function getUserData(email: string): Promise<User> {
     return JSON.parse(userData) as User;
   }
 
-  return userDataFirebase_(email);
+  const user = await userDataFirebase_(email);
+
+  localStorage.setItem(user.email, JSON.stringify(user));
+
+  return user;
 }
 
 async function userDataFirebase_(
