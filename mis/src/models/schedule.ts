@@ -14,7 +14,7 @@ export interface Schedule {
   readonly status?: Status;
 }
 
-type Status = 'AVAILABLE | DONE';
+type Status = 'AVAILABLE' | 'DONE' | 'BOOKED';
 
 export interface DateSchedule {
   readonly schedules: Array<Schedule>;
