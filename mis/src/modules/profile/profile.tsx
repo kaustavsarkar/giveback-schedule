@@ -12,6 +12,9 @@ import {useLocation, useParams} from 'react-router-dom';
 import {getUserData} from 'services/user-service';
 import LoadingIndicator from 'shared/loading-indicator/loading-indicator';
 import {ScheduleCard} from 'modules/schedules/schedule-card';
+import {Schedule} from 'models/schedule';
+import swal from 'sweetalert';
+import {bookInterviewFor} from 'services/schedule-service';
 
 function ProfileInfo_(props: {
   profileUser: User;
@@ -64,6 +67,40 @@ export default function ProfilePage(): JSX.Element {
     }
   }, [emailParam]);
 
+  const showBookingConfDialog = (schedule: Schedule) => {
+    swal({
+      title: 'Almost there!',
+      text: 'Should we book the interview for you?',
+      icon: 'info',
+      buttons: {
+        okay: {text: 'Yes, Please!', closeModal: false},
+      },
+    })
+      .then((value) => {
+        if (value) {
+          console.log('send book call');
+          return bookInterviewFor(schedule, loggedInUser);
+        }
+        return null;
+      })
+      .then((result) => {
+        console.log('first return', result);
+        return result;
+      })
+      .then((result) => {
+        console.log('printing result', result);
+        if (result === null) {
+          return;
+        }
+        getUserData(schedule.interviewer.email).then((response) => {
+          console.log('Setting profile user after booking', response);
+          setProfileUser(response);
+        });
+        swal('Your interview is now scheduled!');
+      })
+      .catch((error) => swal('Report it to You Know Who', error));
+  };
+
   const showBookables = location.pathname.split('/')[3] === 'book';
 
   console.log(
@@ -85,9 +122,15 @@ export default function ProfilePage(): JSX.Element {
     (sch) => new Date(sch.startTime).getTime() >= new Date().getTime(),
   );
   const futureSchedulesComponents = futureSchedules?.map((sch) => (
-    <ScheduleCard key={sch.startTime} schedule={sch} />
+    <ScheduleCard
+      key={sch.startTime}
+      schedule={sch}
+      onClick={() => showBookingConfDialog(sch)}
+    />
   ));
-  const futureScheduleCount = futureSchedules?.length;
+  const futureScheduleCount = futureSchedules?.filter(
+    (sched) => sched.status === 'AVAILABLE',
+  ).length;
 
   console.log(futureSchedules);
   return (

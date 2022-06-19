@@ -1,11 +1,17 @@
 import {Schedule} from 'models/schedule';
 import React from 'react';
 
-export function ScheduleCard(props: {schedule: Schedule}): JSX.Element {
+export function ScheduleCard(props: {
+  schedule: Schedule;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+}): JSX.Element {
   const schedule = props.schedule;
   return (
     <>
-      <div className="col-xxl-4 col-lg-4 col-md-6 col-sm-6">
+      <div
+        className="col-xxl-4 col-lg-4 col-md-6 col-sm-6"
+        onClick={props.onClick}
+      >
         <div className="card">
           <div className="card-header align-items-start">
             <h6 className="heading">{schedule.date}</h6>
@@ -31,7 +37,7 @@ export function ScheduleCard(props: {schedule: Schedule}): JSX.Element {
                 <span className="mb-0 title"> Interviewee </span> :{' '}
                 <span className="ml-2">
                   {' '}
-                  {schedule.interviewee ?? 'Yet to schedule'}{' '}
+                  {schedule.interviewee?.email ?? 'Yet to schedule'}{' '}
                 </span>{' '}
               </li>{' '}
             </ul>
