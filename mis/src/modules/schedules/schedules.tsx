@@ -28,8 +28,15 @@ export default function Schedules(): JSX.Element {
 
   return (
     <div className="schedules">
-      <div className="create-sch-btn">
-        <CreateButton onClick={() => navigate(`create`)} />
+      <div className="schedule-btns">
+        {user.isInterviewer && (
+          <div className="create-sch-btn">
+            <CreateButton onClick={() => navigate(`create`)} />
+          </div>
+        )}
+        <div className="create-sch-btn">
+          <CreateButton text="Book" onClick={() => navigate(`book`)} />
+        </div>
       </div>
       <div>
         <h4 className="schedules-heading">

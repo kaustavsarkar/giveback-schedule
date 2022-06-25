@@ -1,5 +1,15 @@
 import {Schedule} from 'models/schedule';
 import React from 'react';
+import {Link} from 'react-router-dom';
+
+function PersonLink_(props: {email: string}): JSX.Element {
+  console.log(props.email);
+  return (
+    <Link to={`/profile/${props.email}`} target="_blank">
+      {props.email}{' '}
+    </Link>
+  );
+}
 
 export function ScheduleCard(props: {
   schedule: Schedule;
@@ -37,7 +47,18 @@ export function ScheduleCard(props: {
                 <span className="mb-0 title"> Interviewee </span> :{' '}
                 <span className="ml-2">
                   {' '}
-                  {schedule.interviewee?.email ?? 'Yet to schedule'}{' '}
+                  {schedule.interviewee?.email ? (
+                    <PersonLink_ email={schedule.interviewer?.email} />
+                  ) : (
+                    'Yet to schedule'
+                  )}{' '}
+                </span>{' '}
+              </li>{' '}
+              <li className="list-group-item">
+                <span className="mb-0 title"> Interviewer </span> :{' '}
+                <span className="ml-2">
+                  {' '}
+                  <PersonLink_ email={schedule.interviewer?.email} />{' '}
                 </span>{' '}
               </li>{' '}
             </ul>
