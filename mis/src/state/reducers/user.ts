@@ -15,6 +15,7 @@ const initialState = (function () {
     return <UserProfile>{};
   }
 
+  localStorage.setItem('firstTimeLogin', JSON.parse('false'));
   const object: User = JSON.parse(userData);
   return <UserProfile>{user: object};
 })();

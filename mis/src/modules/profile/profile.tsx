@@ -29,13 +29,23 @@ function ProfileInfo_(props: {
   const email = props.profileUser?.email;
   const designation = props.profileUser?.designation;
 
+  let isfirstTimeLogin = false;
+  isfirstTimeLogin = JSON.parse(
+    localStorage.getItem('firstTimeLogin') || `false`,
+  );
+
   return (
     <div id="about-me" className="tab-pane aboutMe">
-      <AboutMe aboutMe={aboutMe} canEdit={props.canEdit} />
+      <AboutMe
+        aboutMe={aboutMe}
+        isfirstTimeLogin={isfirstTimeLogin}
+        canEdit={props.canEdit}
+      />
       <Skills
         existingSkills={skills}
         allSkills={props.allSkills}
         canEdit={props.canEdit}
+        isfirstTimeLogin={isfirstTimeLogin}
       />
       <PersonalInfo
         name={name}
@@ -44,6 +54,7 @@ function ProfileInfo_(props: {
         organisation={organisation}
         yoe={yoe}
         canEdit={props.canEdit}
+        isfirstTimeLogin={isfirstTimeLogin}
       />
     </div>
   );

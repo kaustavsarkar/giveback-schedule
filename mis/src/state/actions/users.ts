@@ -36,12 +36,13 @@ export const userSignIn = async () => {
 async function saveData_(userProfile: UserProfile): Promise<UserProfile> {
   const email = userProfile.user.email;
   let userData = (await userDataFirebase_(email)) as User;
-
+  let firstTimeLogin = false;
   console.log('data from firestore', userData);
 
   // Save user data in firebase if absent.
   if (!userData) {
     saveInFirebase_(userProfile);
+    firstTimeLogin = true;
   }
 
   userData = <User>{
@@ -59,11 +60,15 @@ async function saveData_(userProfile: UserProfile): Promise<UserProfile> {
   saveEmail_(email);
   // Once the data is confirmed to be present inside firebase, we
   // can save it in local storage as well.
-  saveInLocalStorage_(email, userProfile);
+  saveInLocalStorage_(email, userProfile, firstTimeLogin);
   return userProfile;
 }
 
-function saveInLocalStorage_(email: string, userProfile: UserProfile): void {
+function saveInLocalStorage_(
+  email: string,
+  userProfile: UserProfile,
+  firstTimeLogin: boolean,
+): void {
   const userData = localStorage.getItem(email);
 
   console.log('Userdata in local storage', userData);
@@ -71,6 +76,11 @@ function saveInLocalStorage_(email: string, userProfile: UserProfile): void {
     return;
   }
   localStorage.setItem(email, JSON.stringify(userProfile.user));
+  if (firstTimeLogin) {
+    localStorage.setItem('firstTimeLogin', JSON.stringify(firstTimeLogin));
+  } else {
+    localStorage.setItem('firstTimeLogin', JSON.stringify(firstTimeLogin));
+  }
 }
 
 async function saveInFirebase_(userProfile: UserProfile): Promise<void> {

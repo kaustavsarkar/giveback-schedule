@@ -8,9 +8,10 @@ import {updateAboutMe} from 'state/actions/users';
 export default function AboutMe(props: {
   aboutMe: string;
   canEdit?: boolean;
+  isfirstTimeLogin: boolean;
 }): JSX.Element {
-  const [isEdit, setEdit] = useState(false);
-  const [aboutMeText, setAboutMeText] = useState(props.aboutMe);
+  const [isEdit, setEdit] = useState(props.isfirstTimeLogin);
+  const [aboutMeText, setAboutMeText] = useState(props.aboutMe ?? '');
 
   const dispatch = useAppDispatch();
 
