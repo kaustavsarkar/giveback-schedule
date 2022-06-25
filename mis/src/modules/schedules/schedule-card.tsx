@@ -48,7 +48,7 @@ export function ScheduleCard(props: {
                 <span className="ml-2">
                   {' '}
                   {schedule.interviewee?.email ? (
-                    <PersonLink_ email={schedule.interviewer?.email} />
+                    <PersonLink_ email={schedule.interviewee?.email} />
                   ) : (
                     'Yet to schedule'
                   )}{' '}

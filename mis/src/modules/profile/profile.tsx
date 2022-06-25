@@ -15,6 +15,7 @@ import {ScheduleCard} from 'modules/schedules/schedule-card';
 import {Schedule} from 'models/schedule';
 import swal from 'sweetalert';
 import {bookInterviewFor} from 'services/schedule-service';
+import Header from 'modules/header/header';
 
 function ProfileInfo_(props: {
   profileUser: User;
@@ -135,6 +136,7 @@ export default function ProfilePage(): JSX.Element {
   console.log(futureSchedules);
   return (
     <>
+      <Header user={loggedInUser} />
       {profileUser ? (
         <div className="user-profie">
           <ProfileHead
