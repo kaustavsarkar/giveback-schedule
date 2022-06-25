@@ -1,81 +1,87 @@
 .profile {
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 10px;
-  }
-  
-  .profile .profile-photo {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+
+  & .profile-photo {
     max-width: 100px;
     position: relative;
     z-index: 1;
     margin-top: -40px;
     margin-right: 10px;
   }
-  
-  @media only screen and (max-width: 575px) {
-    .profile .profile-photo {
-      width: 80px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 20px;
-    }
-  }
 
-.photo-content {
+  & .photo-content {
     position: relative;
   }
-  
-  .photo-content .cover-photo {
+
+  & .photo-content .cover-photo {
     background-size: cover;
     background-position: 50%;
     min-height: 50px;
     width: 100%;
   }
 
-
-.profile-info {
+  & .profile-info {
     padding: 15px 20px;
   }
-  
-  @media only screen and (max-width: 575px) {
-    .profile-info {
-      padding: 0 0 20px;
-      text-align: center;
-    }
-  }
-  .profile-info p {
+
+  & .profile-info p {
     color: #828690;
   }
-  
-  .profile-info .prf-col {
-    min-width: 250px;
-    padding: 10px 50px 0;
-  }
-  
-  .profile-info {
-    display: -webkit-flex;
-    display: flex;
-  }
-  
-  @media only screen and (max-width: 575px) {
-    .profile-info {
-      display: block;
-    }
-  }
-  
-  .profile-info .profile-details {
+
+  & .profile-info .profile-details {
     display: -webkit-flex;
     display: flex;
     width: 100%;
   }
-  
-  @media only screen and (max-width: 575px) {
-    .profile-info .profile-details {
-      display: block;
-    }
-    .profile-info .profile-details .dropdown {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-    }
+
+  & .profile-info .prf-col {
+    min-width: 250px;
+    padding: 10px 50px 0;
   }
+
+  & .profile-info {
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  & .check-schedules {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .profile .profile-photo {
+    width: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .profile-info {
+    padding: 0 0 20px;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .profile-info {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .profile-info .profile-details {
+    display: block;
+  }
+  .profile-info .profile-details .dropdown {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+  }
+}

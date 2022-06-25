@@ -142,6 +142,7 @@ export default function ProfilePage(): JSX.Element {
             name={name}
             email={email}
             designation={designation}
+            showingSchedules={showBookables}
           />
           <div className="row">
             <div className="col-xl-8">
