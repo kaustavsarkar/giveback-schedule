@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from 'state/hooks';
 import {getInterviewerSchedule} from 'state/actions/users';
 import {RootState} from 'state/store';
 import {useNavigate} from 'react-router-dom';
+import ProfilePhoto from 'shared/profile-photo/profile-photo';
 
 export default function ProfileCard(props: {email: string}): JSX.Element {
   const email = props.email;
@@ -31,18 +32,7 @@ export default function ProfileCard(props: {email: string}): JSX.Element {
     >
       <div className="card">
         <div className="card-header align-items-start">
-          <div className="profile-photo">
-            <img
-              src={'user.photoUrl'}
-              className="img-fluid rounded-circle"
-              onError={({currentTarget}) => {
-                console.log('failed to load image');
-                currentTarget.onerror = null; // prevents looping
-                currentTarget.src = '../profile_pic_ph.png';
-              }}
-              alt="profile"
-            />
-          </div>
+          <ProfilePhoto photoUrl={user?.photoUrl} />
         </div>
         <div className="card-body p-0 pb-3">
           <h6 className="heading">{user?.name}</h6>

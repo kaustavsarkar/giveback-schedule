@@ -1,0 +1,36 @@
+.header {
+  background-color: #2f363e;
+  padding: 10px;
+  border-radius: 10px;
+
+  .navbar-expand-lg {
+    justify-content: space-between;
+  }
+
+  a, a:focus {
+    color: #fff;
+    text-decoration: none ;
+  }
+
+  a:hover {
+    color: #13b497;
+  }
+
+  .navbar {
+    width: 100%;
+  }
+
+  &.sticky {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    padding: 0;
+  }
+
+  & .user-pic {
+    width: 3em;
+    float: right;
+  }
+}

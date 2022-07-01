@@ -1,15 +1,77 @@
-import React from 'react';
+import {User} from 'models/user';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import './header.css';
+import ProfilePhoto from 'shared/profile-photo/profile-photo';
+import './header.scss';
 
-function Header(): JSX.Element {
+function PublicNav_(): JSX.Element {
   return (
-    <div>
-      <div className="home-navbar">
-        <h2>Giveback Schedule</h2>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">SignUp</Link>
-      </div>
+    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul className="navbar-nav mr-auto">
+        <li className="nav-item active">
+          <a className="nav-link" href="#about-us">
+            About us
+          </a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#contact-us">
+            Contact us
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+function PrivateNav_(): JSX.Element {
+  return (
+    <div id="navbarSupportedContent">
+      <ul className="navbar-nav mr-auto">
+        <li className="nav-item active">
+          <Link className="nav-link" to="/schedules">
+            Schedules
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+function Header(props: {user: User}): JSX.Element {
+  const [headerClass, setHeaderClass] = useState('header');
+  const user = props.user;
+  const isUserLoggedIn = user !== undefined && user !== null;
+  const header = document.getElementById('header');
+  const sticky = header?.offsetTop;
+  window.onscroll = () => {
+    console.log('on scoll');
+    console.log(
+      `sticky ${sticky} ${window.pageYOffset} ${
+        sticky !== undefined && window.pageYOffset > sticky
+      }`,
+    );
+    if (sticky !== undefined && window.pageYOffset > sticky) {
+      setHeaderClass('header sticky');
+      console.log(header?.classList);
+    } else {
+      setHeaderClass('header');
+    }
+  };
+  return (
+    <div className={headerClass} id="header">
+      <nav className="navbar navbar-expand-lg">
+        <Link className="navbar-brand" to="/">
+          #Giveback
+        </Link>
+        {isUserLoggedIn ? <PrivateNav_ /> : <PublicNav_ />}
+        <div className="user-pic">
+          {isUserLoggedIn && (
+            <Link to={`/profile/${user.email}`}>
+              <ProfilePhoto photoUrl={user.photoUrl} />
+            </Link>
+          )}
+        </div>
+      </nav>
     </div>
   );
 }

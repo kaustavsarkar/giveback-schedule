@@ -6,6 +6,7 @@ import CreateButton from 'shared/create-button/create-buton';
 import {useAppSelector} from 'state/hooks';
 import {RootState} from 'state/store';
 import {ScheduleCard} from './schedule-card';
+import Header from 'modules/header/header';
 
 export default function Schedules(): JSX.Element {
   const navigate = useNavigate();
@@ -27,22 +28,32 @@ export default function Schedules(): JSX.Element {
     .map((sch) => <ScheduleCard key={sch.startTime} schedule={sch} />);
 
   return (
-    <div className="schedules">
-      <div className="create-sch-btn">
-        <CreateButton onClick={() => navigate(`create`)} />
+    <>
+      <Header user={user} />
+      <div className="schedules">
+        <div className="schedule-btns">
+          {user.isInterviewer && (
+            <div className="create-sch-btn">
+              <CreateButton onClick={() => navigate(`create`)} />
+            </div>
+          )}
+          <div className="create-sch-btn">
+            <CreateButton text="Book" onClick={() => navigate(`book`)} />
+          </div>
+        </div>
+        <div>
+          <h4 className="schedules-heading">
+            <span>Upcoming Interviews</span>
+          </h4>
+          <div className="row schedule">{futureSchedules}</div>
+        </div>
+        <div>
+          <h4 className="schedules-heading">
+            <span>Past Interviews</span>
+          </h4>
+          <div className="row schedule">{pastSchedules}</div>
+        </div>
       </div>
-      <div>
-        <h4 className="schedules-heading">
-          <span>Upcoming Interviews</span>
-        </h4>
-        <div className="row schedule">{futureSchedules}</div>
-      </div>
-      <div>
-        <h4 className="schedules-heading">
-          <span>Past Interviews</span>
-        </h4>
-        <div className="row schedule">{pastSchedules}</div>
-      </div>
-    </div>
+    </>
   );
 }

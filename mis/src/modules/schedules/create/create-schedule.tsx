@@ -12,6 +12,7 @@ import {Skills} from 'models/skills';
 import {User, UserProfile} from 'models/user';
 import {updateSchedules} from 'state/actions/users';
 import {useNavigate} from 'react-router-dom';
+import Header from 'modules/header/header';
 type Time = [number, number] | null;
 
 const week: {[key: number]: string} = {
@@ -208,130 +209,133 @@ export default function CreateSchedule(): JSX.Element {
   };
 
   return (
-    <div className="create-sch row">
-      <div className="col">
-        <div className="row">
-          <div className="col-xl-8 col-lg-6">
-            <div className="card">
-              <div className="card-header">
-                <h4 className="card-title"> Grill with Skills (Required) </h4>{' '}
-              </div>{' '}
-              <div className="card-body">
-                <SelectOptions
-                  options={allSkills}
-                  onChange={onSkillUpdate}
-                ></SelectOptions>
+    <>
+      <Header user={userProfile.user} />
+      <div className="create-sch row">
+        <div className="col">
+          <div className="row">
+            <div className="col-xl-8 col-lg-6">
+              <div className="card">
+                <div className="card-header">
+                  <h4 className="card-title"> Grill with Skills (Required) </h4>{' '}
+                </div>{' '}
+                <div className="card-body">
+                  <SelectOptions
+                    options={allSkills}
+                    onChange={onSkillUpdate}
+                  ></SelectOptions>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xl-8 col-lg-6">
+              <div className="card">
+                <div className="card-header">
+                  <h4 className="card-title"> Say Hey to Day (Required) </h4>{' '}
+                </div>{' '}
+                <div className="card-body">
+                  <SelectOptions
+                    options={Object.values(week)}
+                    onChange={onDaysUpdate}
+                  ></SelectOptions>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xl-8 col-lg-6">
+              <div className="card">
+                <div className="card-header">
+                  <h4 className="card-title"> Which Date Mate (Required) </h4>{' '}
+                </div>{' '}
+                <div className="card-body">
+                  <DateRangePicker
+                    limitEndYear={1}
+                    onChange={handleDateSelect}
+                    disabledDate={combine?.(
+                      beforeToday?.(),
+                      after?.(threeMonthsFromNow),
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xl-8 col-lg-6">
+              <div className="card">
+                <div className="card-header">
+                  <h4 className="card-title"> Crime Time? (Required) </h4>{' '}
+                </div>{' '}
+                <div className="card-body">
+                  <DateRangePicker
+                    format="HH:mm"
+                    ranges={[]}
+                    onChange={handleTimeSelect}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-xl-8 col-lg-6">
-            <div className="card">
-              <div className="card-header">
-                <h4 className="card-title"> Say Hey to Day (Required) </h4>{' '}
-              </div>{' '}
-              <div className="card-body">
-                <SelectOptions
-                  options={Object.values(week)}
-                  onChange={onDaysUpdate}
-                ></SelectOptions>
-              </div>
-            </div>
+        {progress == 100 ? (
+          <div className="create-btn">
+            <CreateButton onClick={() => setModal(true)} />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-xl-8 col-lg-6">
-            <div className="card">
-              <div className="card-header">
-                <h4 className="card-title"> Which Date Mate (Required) </h4>{' '}
-              </div>{' '}
-              <div className="card-body">
-                <DateRangePicker
-                  limitEndYear={1}
-                  onChange={handleDateSelect}
-                  disabledDate={combine?.(
-                    beforeToday?.(),
-                    after?.(threeMonthsFromNow),
-                  )}
-                />
-              </div>
-            </div>
+        ) : (
+          <div className="col sched-progress">
+            <Progress.Circle
+              percent={progress}
+              strokeColor="#34c3ff"
+            ></Progress.Circle>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-xl-8 col-lg-6">
-            <div className="card">
-              <div className="card-header">
-                <h4 className="card-title"> Crime Time? (Required) </h4>{' '}
-              </div>{' '}
-              <div className="card-body">
-                <DateRangePicker
-                  format="HH:mm"
-                  ranges={[]}
-                  onChange={handleTimeSelect}
-                />
-              </div>
+        )}
+        <Modal open={showModal} onClose={() => setModal(false)}>
+          <Modal.Header>
+            <Modal.Title>Verify Schedule</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <strong>For Skills</strong> &nbsp; {Array.from(skills).join(', ')}
             </div>
-          </div>
-        </div>
+            <div>
+              <strong>Interviews shall be scheduled on</strong> &nbsp;{' '}
+              {Array.from(days).join(', ')}
+            </div>
+            <div>
+              <strong>
+                {startDate?.toDateString() +
+                  ` through ` +
+                  endDate?.toDateString()}
+              </strong>
+            </div>
+            <div>
+              Between preferred time of <strong>{startTime?.join(':')}</strong>{' '}
+              and <strong>{endTime?.join(':')}</strong>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              appearance="ghost"
+              color="orange"
+              active
+              onClick={() => setModal(false)}
+            >
+              Edit
+            </Button>
+            <Button
+              appearance="primary"
+              color="orange"
+              active
+              onClick={uploadSchedules}
+              loading={isLoading}
+            >
+              Upload Schedules
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
-      {progress == 100 ? (
-        <div className="create-btn">
-          <CreateButton onClick={() => setModal(true)} />
-        </div>
-      ) : (
-        <div className="col sched-progress">
-          <Progress.Circle
-            percent={progress}
-            strokeColor="#34c3ff"
-          ></Progress.Circle>
-        </div>
-      )}
-      <Modal open={showModal} onClose={() => setModal(false)}>
-        <Modal.Header>
-          <Modal.Title>Verify Schedule</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>
-            <strong>For Skills</strong> &nbsp; {Array.from(skills).join(', ')}
-          </div>
-          <div>
-            <strong>Interviews shall be scheduled on</strong> &nbsp;{' '}
-            {Array.from(days).join(', ')}
-          </div>
-          <div>
-            <strong>
-              {startDate?.toDateString() +
-                ` through ` +
-                endDate?.toDateString()}
-            </strong>
-          </div>
-          <div>
-            Between preferred time of <strong>{startTime?.join(':')}</strong>{' '}
-            and <strong>{endTime?.join(':')}</strong>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            appearance="ghost"
-            color="orange"
-            active
-            onClick={() => setModal(false)}
-          >
-            Edit
-          </Button>
-          <Button
-            appearance="primary"
-            color="orange"
-            active
-            onClick={uploadSchedules}
-            loading={isLoading}
-          >
-            Upload Schedules
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+    </>
   );
 }

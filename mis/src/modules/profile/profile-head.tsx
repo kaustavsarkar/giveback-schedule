@@ -1,11 +1,16 @@
 import './profile-head.scss';
 import React from 'react';
+import SaveButton from 'shared/save-button/save-button';
+import EditButton from 'shared/edit-button/edit-button';
+import {useNavigate} from 'react-router-dom';
+import ProfilePhoto from 'shared/profile-photo/profile-photo';
 
 interface Props_ {
   profilePhoto?: string;
   name?: string;
   email?: string;
   designation?: string;
+  showingSchedules?: boolean;
 }
 
 export default function ProfileHead({
@@ -13,7 +18,9 @@ export default function ProfileHead({
   name,
   email,
   designation,
+  showingSchedules,
 }: Props_): JSX.Element {
+  const navigate = useNavigate();
   return (
     <div className="row">
       <div className="col-lg-12">
@@ -23,17 +30,7 @@ export default function ProfileHead({
               <div className="cover-photo"> </div>
             </div>{' '}
             <div className="profile-info">
-              <div className="profile-photo">
-                <img
-                  src={profilePhoto}
-                  className="img-fluid rounded-circle"
-                  onError={({currentTarget}) => {
-                    currentTarget.onerror = null; // prevents looping
-                    currentTarget.src = 'profile_pic_ph.png';
-                  }}
-                  alt="profile"
-                />
-              </div>{' '}
+              <ProfilePhoto photoUrl={profilePhoto} />
               <div className="profile-details">
                 <div className="profile-name px-3 pt-2">
                   <h4 className="mb-0"> {name} </h4>{' '}
@@ -43,6 +40,19 @@ export default function ProfileHead({
                   <h4 className="text-muted mb-0">{email}</h4> <p> Email </p>{' '}
                 </div>{' '}
               </div>{' '}
+              <div className="check-schedules">
+                {!showingSchedules ? (
+                  <SaveButton
+                    text="Check Schedules"
+                    onClick={() => navigate(`/profile/${email}/book`)}
+                  />
+                ) : (
+                  <EditButton
+                    text="Hide Schedules"
+                    onClick={() => navigate(`/profile/${email}`)}
+                  />
+                )}
+              </div>
             </div>{' '}
           </div>{' '}
         </div>{' '}
