@@ -9,7 +9,7 @@ export default function AboutMe(props: {
   aboutMe: string;
   canEdit?: boolean;
 }): JSX.Element {
-  const [isEdit, setEdit] = useState(false);
+  const [isEdit, setEdit] = useState(props.aboutMe === undefined);
   const [aboutMeText, setAboutMeText] = useState(props.aboutMe);
 
   const dispatch = useAppDispatch();

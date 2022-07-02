@@ -13,7 +13,11 @@ export default function PersonalInfo(props: {
   yoe?: number;
   canEdit?: boolean;
 }): JSX.Element {
-  const [isEdit, setEdit] = useState(false);
+  const [isEdit, setEdit] = useState(
+    props.organisation === undefined ||
+      props.designation === undefined ||
+      props.yoe === undefined,
+  );
   const [organisation, setOrganisation] = useState(props.organisation ?? '');
   const [designation, setDesignation] = useState(props.designation ?? '');
   const [yoe, setYoe] = useState(props.yoe ?? '0');

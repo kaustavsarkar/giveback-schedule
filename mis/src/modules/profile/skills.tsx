@@ -54,7 +54,7 @@ export default function Skills(props: {
   allSkills: Array<string>;
   canEdit?: boolean;
 }): JSX.Element {
-  const [isEdit, setEdit] = useState(false);
+  const [isEdit, setEdit] = useState(props.existingSkills === undefined);
   const [userSkills, setUserSkills] = useState(
     props.existingSkills ?? new Array<string>(),
   );
