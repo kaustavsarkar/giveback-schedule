@@ -9,9 +9,9 @@ import {
   inMemoryPersistence,
 } from 'firebase/auth';
 import {FirebaseApp} from 'gfirebase/firebase';
-import {createGoogleUserProfile} from 'models/user';
+import {createGoogleUserProfile, UserProfile} from 'models/user';
 
-export const googleSignIn = async () => {
+export const googleSignIn = async (): Promise<UserProfile> => {
   const auth = getAuth(FirebaseApp);
   console.log('before persistence');
   await setPersistence(auth, inMemoryPersistence);
@@ -22,6 +22,7 @@ export const googleSignIn = async () => {
   // We need to get only email and profile information from authentication.
   provider.addScope('email');
   provider.addScope('profile');
+  provider.addScope('https://www.googleapis.com/auth/calendar.events');
   try {
     const userCredential = (await signInWithPopup(
       auth,
@@ -43,7 +44,7 @@ export const googleSignIn = async () => {
   } catch (error) {
     console.log(error);
     if (!(error instanceof FirebaseError)) {
-      return;
+      return <UserProfile>{};
     }
     // Handle Errors here.
     const errorCode = error.code;
@@ -58,5 +59,5 @@ export const googleSignIn = async () => {
     \n credential: ${credential}`,
     );
   }
-  return;
+  return <UserProfile>{};
 };

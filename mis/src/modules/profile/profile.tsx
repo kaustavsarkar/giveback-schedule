@@ -16,6 +16,7 @@ import {Schedule} from 'models/schedule';
 import swal from 'sweetalert';
 import {bookInterviewFor} from 'services/schedule-service';
 import Header from 'modules/header/header';
+import {createEvent} from 'services/calendar-service';
 
 function ProfileInfo_(props: {
   profileUser: User;
@@ -52,9 +53,10 @@ function ProfileInfo_(props: {
 
 export default function ProfilePage(): JSX.Element {
   const [profileUser, setProfileUser] = useState<User>();
-  const loggedInUser = useAppSelector(
-    (state: RootState) => state.userProfile.user,
-  ) as User;
+  const [loggedInUser, creds] = useAppSelector((state: RootState) => [
+    state.userProfile.user,
+    state.userProfile.googleCreds,
+  ]);
   const location = useLocation();
   const params = useParams();
   const emailParam = params.email;
@@ -77,7 +79,7 @@ export default function ProfilePage(): JSX.Element {
         okay: {text: 'Yes, Please!', closeModal: false},
       },
     })
-      .then((value) => {
+      .then(async (value) => {
         if (value) {
           console.log('send book call');
           return bookInterviewFor(schedule, loggedInUser);
@@ -97,8 +99,11 @@ export default function ProfilePage(): JSX.Element {
           console.log('Setting profile user after booking', response);
           setProfileUser(response);
         });
-        swal('Your interview is now scheduled!');
       })
+      .then(() => {
+        return createEvent(schedule, creds, loggedInUser);
+      })
+      .then(() => swal('Your interview is now scheduled!'))
       .catch((error) => swal('Report it to You Know Who', error));
   };
 
