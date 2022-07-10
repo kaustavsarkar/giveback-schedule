@@ -44,15 +44,8 @@ function Header(props: {user: User}): JSX.Element {
   const header = document.getElementById('header');
   const sticky = header?.offsetTop;
   window.onscroll = () => {
-    console.log('on scoll');
-    console.log(
-      `sticky ${sticky} ${window.pageYOffset} ${
-        sticky !== undefined && window.pageYOffset > sticky
-      }`,
-    );
     if (sticky !== undefined && window.pageYOffset > sticky) {
       setHeaderClass('header sticky');
-      console.log(header?.classList);
     } else {
       setHeaderClass('header');
     }
