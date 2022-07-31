@@ -9,11 +9,18 @@ export default interface Event {
   end: Time;
   conferenceData: ConferenceData;
   attendees: Attendee[];
+  attachments: Array<Attachment>;
 }
 
 export type SendUpdates = 'all' | 'externalOnly' | 'none';
 export type Kind = 'calendar#event';
 export type ConfDataVersion = 0 | 1;
+
+export interface Attachment {
+  fileUrl: string;
+  title: string;
+  mimeType: string;
+}
 
 export interface Time {
   date?: string;

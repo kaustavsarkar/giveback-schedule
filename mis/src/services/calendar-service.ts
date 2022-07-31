@@ -1,4 +1,6 @@
+import File from 'models/drive-file';
 import Event, {
+  Attachment,
   Attendee,
   ConferenceData,
   ConferenceSolutionKey,
@@ -13,6 +15,7 @@ export async function createEvent(
   interview: Schedule,
   creds: GoogleCreds,
   interviewee: User,
+  file: File,
 ): Promise<void> {
   let accessToken: string;
   if (!creds) {
@@ -21,6 +24,15 @@ export async function createEvent(
   } else {
     accessToken = creds.accessToken;
   }
+
+  const attachment =
+    file.name != undefined && file.name != null
+      ? <Attachment>{
+          fileUrl: file?.webViewLink,
+          title: file?.name,
+          mimeType: file?.mimeType,
+        }
+      : null;
 
   const event = <Event>{
     summary: '#giveback interview',
@@ -55,6 +67,7 @@ export async function createEvent(
         },
       },
     },
+    attachments: [attachment],
   };
 
   console.log(JSON.stringify(event, null, 4));

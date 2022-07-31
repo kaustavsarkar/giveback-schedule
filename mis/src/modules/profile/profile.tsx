@@ -1,5 +1,5 @@
 import './profile.scss';
-import {User} from 'models/user';
+import {GoogleCreds, User} from 'models/user';
 import React, {useEffect, useState} from 'react';
 import {useAppSelector} from 'state/hooks';
 import {RootState} from 'state/store';
@@ -17,6 +17,9 @@ import swal from 'sweetalert';
 import {bookInterviewFor} from 'services/schedule-service';
 import Header from 'modules/header/header';
 import {createEvent} from 'services/calendar-service';
+import {createGDoc} from 'services/gdoc-service';
+import File from 'models/drive-file';
+import {verifyAndReturnCreds} from 'modules/auth/google_auth';
 
 function ProfileInfo_(props: {
   profileUser: User;
@@ -100,8 +103,12 @@ export default function ProfilePage(): JSX.Element {
           setProfileUser(response);
         });
       })
-      .then(() => {
-        return createEvent(schedule, creds, loggedInUser);
+      .then(() => verifyAndReturnCreds(creds))
+      .then((credentials: GoogleCreds) =>
+        Promise.all([credentials, createGDoc(credentials)]),
+      )
+      .then(([credentials, file]: [GoogleCreds, File]) => {
+        return createEvent(schedule, credentials, loggedInUser, file);
       })
       .then(() => swal('Your interview is now scheduled!'))
       .catch((error) => swal('Report it to You Know Who', error));

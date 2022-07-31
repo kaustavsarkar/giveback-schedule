@@ -9,7 +9,7 @@ import {
   inMemoryPersistence,
 } from 'firebase/auth';
 import {FirebaseApp} from 'gfirebase/firebase';
-import {createGoogleUserProfile, UserProfile} from 'models/user';
+import {createGoogleUserProfile, GoogleCreds, UserProfile} from 'models/user';
 
 export const googleSignIn = async (): Promise<UserProfile> => {
   const auth = getAuth(FirebaseApp);
@@ -23,6 +23,9 @@ export const googleSignIn = async (): Promise<UserProfile> => {
   provider.addScope('email');
   provider.addScope('profile');
   provider.addScope('https://www.googleapis.com/auth/calendar.events');
+  provider.addScope('https://www.googleapis.com/auth/documents');
+  provider.addScope('https://www.googleapis.com/auth/drive');
+  provider.addScope('https://www.googleapis.com/auth/drive.file');
   try {
     const userCredential = (await signInWithPopup(
       auth,
@@ -60,4 +63,19 @@ export const googleSignIn = async (): Promise<UserProfile> => {
     );
   }
   return <UserProfile>{};
+};
+
+export const verifyAndReturnCreds = async (
+  creds: GoogleCreds,
+): Promise<GoogleCreds> => {
+  let accessToken: string;
+  if (!creds) {
+    const userProfile = await googleSignIn();
+    accessToken = userProfile.googleCreds.accessToken;
+  } else {
+    accessToken = creds.accessToken;
+  }
+  return <GoogleCreds>{
+    accessToken: accessToken,
+  };
 };
