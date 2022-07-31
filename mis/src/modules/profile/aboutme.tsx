@@ -4,6 +4,8 @@ import EditButton from 'shared/edit-button/edit-button';
 import SaveButton from 'shared/save-button/save-button';
 import {useAppDispatch} from 'state/hooks';
 import {updateAboutMe} from 'state/actions/users';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function AboutMe(props: {
   aboutMe: string;
@@ -56,7 +58,9 @@ export default function AboutMe(props: {
               {' '}
             </textarea>
           ) : (
-            <p className="mb-2">{aboutMeText}</p>
+            <ReactMarkdown className="mb-2" remarkPlugins={[remarkGfm]}>
+              {aboutMeText}
+            </ReactMarkdown>
           )}
         </div>{' '}
       </div>{' '}
