@@ -13,6 +13,7 @@ import {User, UserProfile} from 'models/user';
 import {updateSchedules} from 'state/actions/users';
 import {useNavigate} from 'react-router-dom';
 import Header from 'modules/header/header';
+import {nanoid} from '@reduxjs/toolkit';
 type Time = [number, number] | null;
 
 const week: {[key: number]: string} = {
@@ -180,6 +181,7 @@ export default function CreateSchedule(): JSX.Element {
 
         // Set scheduling details.
         const schedule: Schedule = {
+          id: nanoid(),
           interviewer: interviewer,
           date: new Date(date).toDateString(),
           startTime: sTime.toUTCString(),
