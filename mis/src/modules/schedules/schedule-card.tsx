@@ -26,6 +26,11 @@ export function ScheduleCard(props: {
           <div className="card-header align-items-start">
             <h6 className="heading">{schedule.date}</h6>
             <div className="skills">{schedule.skills.skills.join(' ')}</div>
+            {schedule.interviewee?.email ? (
+              <div>Click on the card to start the interview</div>
+            ) : (
+              ''
+            )}
           </div>
           <div className="card-body p-0 pb-3">
             <ul className="list-group list-group-flush">
