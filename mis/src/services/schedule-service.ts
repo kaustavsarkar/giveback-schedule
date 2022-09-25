@@ -4,12 +4,18 @@ import {
   DocumentReference,
   DocumentSnapshot,
   runTransaction,
+  setDoc,
   Transaction,
 } from 'firebase/firestore';
 import {fsDatabase} from 'gfirebase/firebase';
-import {Schedule} from 'models/schedule';
+import {Interview, Schedule} from 'models/schedule';
 import {User} from 'models/user';
-import {UserCollection, UserConverter} from 'state/firebase/schema';
+import {
+  InterviewCollection,
+  InterviewConverter,
+  UserCollection,
+  UserConverter,
+} from 'state/firebase/schema';
 
 /**
  * Books interview for the interviewee and the interviewer.
@@ -22,7 +28,10 @@ import {UserCollection, UserConverter} from 'state/firebase/schema';
  * information about the schedules of the users should already be present in
  * the local storage.
  */
-export async function bookInterviewFor(schedule: Schedule, bookFor: User) {
+export async function bookInterviewFor(
+  schedule: Schedule,
+  bookFor: User,
+): Promise<Schedule> {
   const interviewerEmail = schedule.interviewer.email;
   const intervieweeEmail = bookFor.email;
 
@@ -109,6 +118,8 @@ export async function bookInterviewFor(schedule: Schedule, bookFor: User) {
     };
     localStorage.setItem(intervieweeEmail, JSON.stringify(updatedInterviewee));
   });
+
+  return updatedSchedule;
 }
 
 function updateSchedulesWithLatest_(
@@ -136,4 +147,19 @@ function getUserFromLocalStorage_(email: string): User {
   const userDataData = localStorage.getItem(email);
   const user: User = userDataData && JSON.parse(userDataData);
   return user;
+}
+
+export async function upsertInterview(interview: Interview): Promise<void> {
+  if (interview.id == undefined || interview.id == null) {
+    return;
+  }
+
+  localStorage.setItem(interview.id, JSON.stringify(interview));
+
+  return setDoc(
+    doc(fsDatabase, InterviewCollection.name, interview.id).withConverter(
+      new InterviewConverter(),
+    ),
+    interview,
+  );
 }

@@ -6,6 +6,7 @@ import {
   WithFieldValue,
 } from 'firebase/firestore';
 import {Interviewers} from 'models/interviewers';
+import {Interview} from 'models/schedule';
 import {Skills} from 'models/skills';
 import {User} from 'models/user';
 
@@ -15,6 +16,10 @@ interface Collection {
 
 export class UserCollection implements Collection {
   name = 'User';
+}
+
+export class InterviewCollection implements Collection {
+  name = 'Interview';
 }
 
 export class SkillsCollection implements Collection {
@@ -132,6 +137,46 @@ export class InterviewersConverter
     const data = snapshot.data(options);
     return <Interviewers>{
       interviewers: data.interviewers,
+    };
+  }
+}
+
+export class InterviewConverter implements FirestoreDataConverter<Interview> {
+  toFirestore(interview: WithFieldValue<Interview>): DocumentData {
+    return {
+      id: interview.id,
+      date: interview.date,
+      startTime: interview.startTime,
+      endTime: interview.endTime,
+      interviewer: interview.interviewer,
+      interviewee: interview.interviewee,
+      skills: interview.skills,
+      status: interview.status,
+      googleMeetLink: interview.googleMeetLink,
+      googleDocLink: interview.googleDocLink,
+      interviewerFeedback: interview.interviewerFeedback,
+      intervieweeFeedback: interview.intervieweeFeedback,
+    };
+  }
+
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot<DocumentData>,
+    options?: SnapshotOptions,
+  ): Interview {
+    const data = snapshot.data(options);
+    return <Interview>{
+      id: data.id,
+      date: data.date,
+      startTime: data.startTime,
+      endTime: data.endTime,
+      interviewer: data.interviewer,
+      interviewee: data.interviewee,
+      skills: data.skills,
+      status: data.status,
+      googleMeetLink: data.googleMeetLink,
+      googleDocLink: data.googleDocLink,
+      interviewerFeedback: data.interviewerFeedback,
+      intervieweeFeedback: data.intervieweeFeedback,
     };
   }
 }
