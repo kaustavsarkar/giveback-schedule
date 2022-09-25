@@ -20,6 +20,7 @@ import {createEvent} from 'services/calendar-service';
 import {createGDoc} from 'services/gdoc-service';
 import File from 'models/drive-file';
 import {verifyAndReturnCreds} from 'modules/auth/google_auth';
+import Event from 'models/event';
 
 function ProfileInfo_(props: {
   profileUser: User;
@@ -82,16 +83,33 @@ export default function ProfilePage(): JSX.Element {
         okay: {text: 'Yes, Please!', closeModal: false},
       },
     })
-      .then(async (value) => {
-        if (value) {
-          console.log('send book call');
-          return bookInterviewFor(schedule, loggedInUser);
+      .then((value) => {
+        if (value !== 'okay') {
+          throw 'Your request has been canclled';
         }
-        return null;
+        return verifyAndReturnCreds(creds);
       })
-      .then((result) => {
-        console.log('first return', result);
-        return result;
+      .then((credentials: GoogleCreds) => {
+        if (credentials === undefined) {
+          throw 'Failed to request credentials';
+        }
+        return Promise.all([credentials, createGDoc(credentials)]);
+      })
+      .then(([credentials, file]: [GoogleCreds, File]) => {
+        return Promise.all([
+          createEvent(schedule, credentials, loggedInUser, file),
+          file,
+        ]);
+      })
+      .then(async ([event, file]: [Event, File]) => {
+        console.log('send book call', event, file);
+        schedule = {
+          ...schedule,
+          googleDocLink: file.webViewLink,
+          googleMeetLink: event.hangoutLink,
+        };
+
+        return bookInterviewFor(schedule, loggedInUser);
       })
       .then((result) => {
         console.log('printing result', result);
@@ -103,15 +121,8 @@ export default function ProfilePage(): JSX.Element {
           setProfileUser(response);
         });
       })
-      .then(() => verifyAndReturnCreds(creds))
-      .then((credentials: GoogleCreds) =>
-        Promise.all([credentials, createGDoc(credentials)]),
-      )
-      .then(([credentials, file]: [GoogleCreds, File]) => {
-        return createEvent(schedule, credentials, loggedInUser, file);
-      })
-      .then(() => swal('Your interview is now scheduled!'))
-      .catch((error) => swal('Report it to You Know Who', error));
+      .catch((error) => swal('Report it to You Know Who', error))
+      .then(() => swal('Your interview is now scheduled!'));
   };
 
   const showBookables = location.pathname.split('/')[3] === 'book';

@@ -1,0 +1,12 @@
+.schedule-details-container {
+  & .card {
+    & .title {
+      color: #61dafb;
+      font-weight: bolder;
+    }
+  }
+
+  & .details-section {
+    margin-top: 10px;
+  }
+}

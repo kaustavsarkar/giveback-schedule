@@ -8,6 +8,7 @@ import ProfilePage from 'modules/profile/profile';
 import Schedules from 'modules/schedules/schedules';
 import CreateSchedule from 'modules/schedules/create/create-schedule';
 import BookSchedule from 'modules/schedules/book/book-schedule';
+import ScheduleDetails from 'modules/schedules/details/schedules-details';
 
 /**
  *
@@ -24,6 +25,10 @@ function App(): JSX.Element {
           <Route path="/schedules" element={<Schedules />}></Route>
           <Route path="/schedules/create" element={<CreateSchedule />}></Route>
           <Route path="/schedules/book" element={<BookSchedule />}></Route>
+          <Route
+            path="/schedules/details/:scheduleId"
+            element={<ScheduleDetails />}
+          ></Route>
           <Route path="/profile/:email/book" element={<ProfilePage />}></Route>
         </Route>
       </Routes>
