@@ -1,4 +1,5 @@
 export default interface Event {
+  id?: string;
   summary: string;
   description: string;
   conferenceDataVersion: ConfDataVersion;
@@ -10,6 +11,7 @@ export default interface Event {
   conferenceData: ConferenceData;
   attendees: Attendee[];
   attachments: Array<Attachment>;
+  hangoutLink?: string;
 }
 
 export type SendUpdates = 'all' | 'externalOnly' | 'none';
