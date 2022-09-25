@@ -16,7 +16,7 @@ export async function createEvent(
   creds: GoogleCreds,
   interviewee: User,
   file: File,
-): Promise<void> {
+): Promise<Event> {
   let accessToken: string;
   if (!creds) {
     const userProfile = await googleSignIn();
@@ -81,5 +81,8 @@ export async function createEvent(
     },
   );
 
-  response.json().then((data) => console.log(data));
+  const data = await response.json();
+  console.log(data);
+  const createdEvent = data as Event;
+  return createdEvent;
 }
